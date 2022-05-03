@@ -6,11 +6,72 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var visibleId = "welcomeDiv";
+var users = [
+	{dictUserName: "k", dictPassword: "k", fullName: "k" ,email:"k@gmail.com", birthDate:"1999-05-22"},
+  ];
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
 });
+
+// function to switch between 2 divs
+function toggleDiv(ToDivId)
+{
+    // if(document.getElementById(fromDivId).style.display == 'block')
+    // {
+		document.getElementById(visibleId).style.display = 'none';
+		document.getElementById(ToDivId).style.display = 'block';
+		visibleId = ToDivId;
+    // }
+    // else
+    // {  
+	// 	document.getElementById(ToDivId).style.display = 'none';
+	// 	document.getElementById(fromDivId).style.display = 'block'
+    // }
+} 
+
+//Login form - check if exists in the users DS
+function Login()
+{
+	var username = document.getElementById('userName').value
+	var password = document.getElementById('password').value
+	for(i=0 ; i < users.length ; i++) 
+	{
+		if(username == users[i].dictUserName && password == users[i].dictPassword)
+		{
+			alert('Login successful');
+			return
+		}
+	
+		else
+		{
+			alert('Login fail');
+			return
+		}
+	}
+}
+
+function Signup(){
+	var signupUser =document.getElementById('userName').value 
+	var signupPassword = document.getElementById('password').value
+	var signupFullname = document.getElementById('fullName').value
+	var signupEmail = document.getElementById('email').value
+	var signupBirthDate = document.getElementById('birthDate').value
+	var newUser = 
+		{dictUserName: signupUser,
+		dictPassword: signupPassword,
+		fullName: signupFullname ,
+		email:signupEmail,
+		birthDate:signupBirthDate}
+
+	users.push(newUser)
+	console.log(users)
+	alert('Signup successful');
+	}
+
+
 
 function Start() {
 	board = new Array();

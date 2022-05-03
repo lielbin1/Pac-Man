@@ -3,10 +3,67 @@
 	<head>
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 
 	<body>
-		<div id="score">
+		<!-- Top Navigation Bar -->
+		<div class="topnav" id="menu">
+			<a class="menuItem" href="#Welcome" onclick="toggleDiv('welcomeDiv')">Welcome</a>
+			<a class="menuItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
+			<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
+			<a class="menuItem"  href="#About" onclick="About()">About</a>
+		</div>
+		<!-- Welcome Div -->
+		<div class="welcome" id="welcomeDiv" style="display:block;">
+			<a class="welcomeItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
+			<a class="welcomeItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
+		</div>
+		<!-- Login Form -->
+		<div>
+			<form id="loginForm"  style="display:none;">
+				<div class="container">
+				  <label for="userName"><b>Username</b></label>
+				  <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
+				  <label for="password"><b>Password</b></label>
+				  <input type="password" placeholder="Enter Password" name="password" id="password" required>
+				  <button type="submit" onclick="Login()">Login</button>
+				</div>
+				<div class="container" style="background-color:#f1f1f1">
+				  <button type="button" class="cancelbtn">Cancel</button>
+				</div>
+			  </form>
+		</div>
+		<!-- Registration Form -->
+		<form id="signupForm" style="display:none;">
+			<div class="container">
+			  <h1>Signup</h1>
+			  <p>Please fill in this form to create an account.</p>
+			  <hr>
+			  
+			  <label for="userName"><b>User Name</b></label>
+			  <input type="text" placeholder="Enter User Name" name="userName" id="userName" required>
+			  
+			  <label for="password"><b>Password</b></label>
+			  <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+			  <label for="fullName"><b>Full Name</b></label>
+			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName" required>
+
+			  <label for="email"><b>Email</b></label>
+			  <input type="text" placeholder="Enter Email" name="email" id="email" required>
+		  
+			  <label for="birthDate"><b>Birth Date</b></label>
+			  <input type="date" id="birthDate" name="birthDate"
+					value="yyyy-MM-dd"
+					min="1800-01-01" max="2025-12-31">
+			  <hr>
+			  <button type="submit" class="registerbtn" onclick="Signup()">Signup</button>
+			</div>
+		  </form>
+
+
+		<!-- <div id="score">
 			<label for="lblScore">SCORE:</label>
 			<input id="lblScore" type="text" />
 		</div>
@@ -16,6 +73,6 @@
 		</div>
 		<div id="game">
 			<canvas id="canvas" height="600" width="600"></canvas>
-		</div>
+		</div> -->
 	</body>
 </html>
