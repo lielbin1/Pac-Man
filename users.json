@@ -1,0 +1,14 @@
+{
+    "users": 
+    [
+        {
+            "UserName": "k",
+            "Password": "k",
+            "fullName": "k" ,
+            "email":"k@gmail.com", 
+            "birthDate":"1999-05-22"
+        }
+    ]
+
+
+}

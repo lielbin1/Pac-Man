@@ -1,15 +1,17 @@
+
 var context;
 var shape = new Object();
 var board;
+var dialog;
 var score;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
 var visibleId = "welcomeDiv";
-var users = [
-	{dictUserName: "k", dictPassword: "k", fullName: "k" ,email:"k@gmail.com", birthDate:"1999-05-22"},
-  ];
+//var jsonData = require('./users.json'); 
+var usersArr = [[ "k", "k", "k", "k@gmail.com", "1999-05-22"]];
+
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -19,57 +21,79 @@ $(document).ready(function() {
 // function to switch between 2 divs
 function toggleDiv(ToDivId)
 {
-    // if(document.getElementById(fromDivId).style.display == 'block')
-    // {
-		document.getElementById(visibleId).style.display = 'none';
-		document.getElementById(ToDivId).style.display = 'block';
-		visibleId = ToDivId;
-    // }
-    // else
-    // {  
-	// 	document.getElementById(ToDivId).style.display = 'none';
-	// 	document.getElementById(fromDivId).style.display = 'block'
-    // }
+
+	document.getElementById(visibleId).style.display = 'none';
+	document.getElementById(ToDivId).style.display = 'block';
+	visibleId = ToDivId;
+
 } 
 
 //Login form - check if exists in the users DS
 function Login()
 {
-	var username = document.getElementById('userName').value
-	var password = document.getElementById('password').value
-	for(i=0 ; i < users.length ; i++) 
-	{
-		if(username == users[i].dictUserName && password == users[i].dictPassword)
-		{
-			alert('Login successful');
-			return
-		}
 	
-		else
-		{
-			alert('Login fail');
-			return
+	var username = document.getElementById('userName').value
+	var password = document.getElementById('Password').value
+
+	for (let i = 0; i < usersArr.length; i++) { 
+		if (usersArr[i][0] == username && usersArr[i][1] == password) {
+			alert('Login successful');
+			// need to open settign page ;
+			return; 
+		}
+		if (usersArr[i][0] == username && usersArr[i][1] != password) {
+			alert('The password is not correct');
+			return; 
 		}
 	}
+	alert("User is not exist");      
+
 }
 
+/////////sign up ////////////////////////
 function Signup(){
-	var signupUser =document.getElementById('userName').value 
-	var signupPassword = document.getElementById('password').value
-	var signupFullname = document.getElementById('fullName').value
-	var signupEmail = document.getElementById('email').value
-	var signupBirthDate = document.getElementById('birthDate').value
-	var newUser = 
-		{dictUserName: signupUser,
-		dictPassword: signupPassword,
-		fullName: signupFullname ,
-		email:signupEmail,
-		birthDate:signupBirthDate}
 
-	users.push(newUser)
-	console.log(users)
-	alert('Signup successful');
+	const signupUser =document.getElementById('username').value ;
+	const signupPassword = document.getElementById('pass').value;
+	const signupFullname = document.getElementById('fullName').value;
+	const signupEmail = document.getElementById('email').value;
+	const signupBirthDate = document.getElementById('birthDate').value;
+	for (let i = 0; i < usersArr.length; i++) { 
+		if (usersArr[i][0] == signupUser) {
+			alert('The user name already exist, please enter ather user name');
+			return; 
+		}
 	}
+	const newUser = [signupUser, signupPassword,signupFullname,signupEmail,signupBirthDate];
+	usersArr.push(newUser);
+	alert('Signup successful');
+
+	
+	}
+
+// /*----------------------------------valid--------------------------------------*/
+// $(function() {
+
+// 	//Password must contain at least 6 digit and contain one number and one char.
+// 	$.validator.addMethod('validPassword', function (value, element) {
+// 		return this.optional(element) ||
+// 			value.length >= 6 &&
+// 			/\d/.test(value) &&
+// 			/[a-z]/i.test(value);
+// 	});
+
+
+//     //check if username already exists
+// 	$.validator.addMethod('userExists', function (users, element) {
+// 		if(users in userDic) {
+// 			return false;
+// 		}
+// 		else{
+// 			return true;
+// 		}
+// 	});
+
+// });
 
 
 
