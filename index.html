@@ -14,53 +14,117 @@
 			<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
 			<a class="menuItem"  href="#About" onclick="About()">About</a>
 		</div>
+		<br/>
+		<br/>
+		<br/>
 		<!-- Welcome Div -->
 		<div class="welcome" id="welcomeDiv" style="display:block;">
 			<a class="welcomeItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
 			<a class="welcomeItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
 		</div>
-		<!-- Login Form -->
-		<div>
-			<form id="loginForm"  style="display:none;">
-				<div class="container">
-				  <label for="userName"><b>Username</b></label>
-				  <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
-				  <label for="password"><b>Password</b></label>
-				  <input type="password" placeholder="Enter Password" name="password" id="password" required>
-				  <button type="submit" onclick="Login()">Login</button>
-				</div>
-				<div class="container" style="background-color:#f1f1f1">
-				  <button type="button" class="cancelbtn">Cancel</button>
-				</div>
-			  </form>
-		</div>
+		<br/>
+		<br/>
+		<br/>
+
 		<!-- Registration Form -->
-		<form id="signupForm" style="display:none;">
+		<form id="signupForm"  name="registration" style="display:none;">
 			<div class="container">
 			  <h1>Signup</h1>
 			  <p>Please fill in this form to create an account.</p>
 			  <hr>
 			  
-			  <label for="userName"><b>User Name</b></label>
-			  <input type="text" placeholder="Enter User Name" name="userName" id="userName" required>
+			  <label for="username"><b>User Name</b></label>
+			  <input type="text" placeholder="Enter User Name" name="username" id="username"  pattern="^[a-zA-Z]*$"  required="required" autocomplete="off">
 			  
-			  <label for="password"><b>Password</b></label>
-			  <input type="password" placeholder="Enter Password" name="password" id="password" required>
+			  <label for="pass"><b>Password</b></label>
+			  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="pass" id="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" required="required" autocomplete="off">
 
 			  <label for="fullName"><b>Full Name</b></label>
-			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName" required>
+			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName" pattern="^[a-zA-Z]*$" required="required" autocomplete="off">
 
 			  <label for="email"><b>Email</b></label>
-			  <input type="text" placeholder="Enter Email" name="email" id="email" required>
+			  <input type="text" placeholder="Enter Email" name="email" id="email" required="required"  autocomplete="off">
 		  
 			  <label for="birthDate"><b>Birth Date</b></label>
 			  <input type="date" id="birthDate" name="birthDate"
 					value="yyyy-MM-dd"
 					min="1800-01-01" max="2025-12-31">
 			  <hr>
-			  <button type="submit" class="registerbtn" onclick="Signup()">Signup</button>
+			  <button type="button" class="registerbtn" onclick="Signup()">Signup</button>
+			  <button type="button" class="cancel" onclick="toggleDiv('welcomeDiv')">Cancel</button>
+
 			</div>
 		  </form>
+		  <br/>
+		  <br/>
+		  <br/>
+		<!-- Login Form -->
+		<div>
+			<form id="loginForm"  style="display:none;">
+				<div class="container">
+				  <label for="userName"><b>Username</b></label>
+				  <input type="text" placeholder="Enter Username" name="userName" id="userName" required="required" autocomplete="off">
+				  <label for="Password"><b>Password</b></label>
+				  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="Password" id="Password" required="required" autocomplete="off">
+				  <button type="button" onclick="Login()">Login</button>
+				</div>
+				<div class="container" style="background-color:#f1f1f1">
+				  <button type="button" class="cancelbtn" onclick="toggleDiv('welcomeDiv')">Cancel</button>
+				</div>
+			  </form>
+		</div>
+		<!-- ///////////////////////settinr section ///////////////////////////////// -->
+		
+		<section  id="gameSettingsSection" style="display:none;">
+			<br/>
+			<br/>
+			<br/>
+			<div id="Settings" >
+			<form id="settingsForm">
+				<div class="container">
+				  <h1 style="color: azure;">Pre game settings</h1>
+				  <hr>
+				  <p>
+					<label for="ballsNum"><u>Enter number of balls:</u></label><br/>
+					<input  id="ballsNum" value=50 type="number" name="ballsNum" min= "50" max="90" required="required" >
+				  </p>
+				  <p><br>
+					<label for="gameTime"><u> Enter game duration:</u></label><br/>
+					<input  id="gameTime" value= 60 type="number" name="gameTime" min= "60" required="required">
+				  </p>   
+				  <p><br>
+					<label for="monstersNum"><u>Enter number of monsters:</u></label><br/>
+					<input  id="monstersNum" value=1 type="number" name="monstersNum" min="1" max="4" required="true">
+				  </p>
+	
+				  <p><br>
+					<label ><u>Enter balls color:</u></label><br/>
+					<label for="monstersNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
+					<input type="color" id="ball_5_color" name="5color" value="#00CED1" style="width: 7%;" >
+					<input type="color" id="ball_15_color" name="15color" value="#FF69B4"style="width: 7%;">
+					<input type="color" id="ball_25_color" name="25color" value="#00008B" style="width: 7%;">
+				  </p>
+				 <div><br>
+					<label ><u>Enter game buttons:</u></label><br/>
+					<input id="upKeyInp"   type="text"  autocomplete="off" name="up" required="true" placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;">
+					<input id="downKeyInp" type="text" autocomplete="off" name="down" required="true" placeholder="&#8595;"  style="text-align: center;width: 7%; font-size: 3mm;">
+					<input id="LeftKeyInp"  type="text" autocomplete="off" name="left" required="true" placeholder="&#8592;" style="text-align: center;width: 7%; font-size: 3mm;" >
+					<input id="rightKeyInp"  type="text" autocomplete="off" name="right" required="true" placeholder="&#8594;"  style="text-align: center;width: 7%; font-size: 3mm;">
+				 </div>
+	
+				  <br>
+				  <br>
+				  <p>
+					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2">
+					<button id="randomGameButton" name="random"  class="formButton formButton2">random</button>
+				  </p>
+				</div>
+			</form>		
+			</div>
+			
+		</section>
+	
+
 
 
 		<!-- <div id="score">
