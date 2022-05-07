@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<script src="./jquery-3.4.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
@@ -27,7 +29,7 @@
 		<br/>
 
 		<!-- Registration Form -->
-		<form id="signupForm"  name="registration" style="display:none;">
+		<!-- <form id="signupForm"  name="registration" style="display:none;">
 			<div class="container">
 			  <h1>Signup</h1>
 			  <p>Please fill in this form to create an account.</p>
@@ -36,8 +38,8 @@
 			  <label for="username"><b>User Name</b></label>
 			  <input type="text" placeholder="Enter User Name" name="username" id="username"  pattern="^[a-zA-Z]*$"  required="required" autocomplete="off">
 			  
-			  <label for="pass"><b>Password</b></label>
-			  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="pass" id="pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" required="required" autocomplete="off">
+			  <label for="password"><b>Password</b></label>
+			  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" required="required" autocomplete="off">
 
 			  <label for="fullName"><b>Full Name</b></label>
 			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName" pattern="^[a-zA-Z]*$" required="required" autocomplete="off">
@@ -51,6 +53,34 @@
 					min="1800-01-01" max="2025-12-31">
 			  <hr>
 			  <button type="button" class="registerbtn" onclick="Signup()">Signup</button>
+			  <button type="button" class="cancel" onclick="toggleDiv('welcomeDiv')">Cancel</button>
+
+			</div>
+		  </form> -->
+		  <form id="signupForm"  name="registration" style="display:none;">
+			<div class="container">
+			  <h1>Signup</h1>
+			  <p>Please fill in this form to create an account.</p>
+			  <hr>
+			  
+			  <label for="username"><b>User Name</b></label>
+			  <input type="text" placeholder="Enter User Name" name="username" id="username" >
+			  
+			  <label for="password"><b>Password</b></label>
+			  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" id="password" >
+
+			  <label for="fullName"><b>Full Name</b></label>
+			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName">
+
+			  <label for="email"><b>Email</b></label>
+			  <input type="text" placeholder="Enter Email" name="email" id="email">
+		  
+			  <label for="birthDate"><b>Birth Date</b></label>
+			  <input type="date" id="birthDate" name="birthDate"
+					value="yyyy-MM-dd"
+					min="1800-01-01" max="2025-12-31">
+			  <hr>
+			  <button type="submit" class="registerbtn">Signup</button>
 			  <button type="button" class="cancel" onclick="toggleDiv('welcomeDiv')">Cancel</button>
 
 			</div>
@@ -73,7 +103,7 @@
 				</div>
 			  </form>
 		</div>
-		<!-- ///////////////////////settinr section ///////////////////////////////// -->
+		<!-- settings section -->
 		
 		<section  id="gameSettingsSection" style="display:none;">
 			<br/>

@@ -10,7 +10,8 @@ var time_elapsed;
 var interval;
 var visibleId = "welcomeDiv";
 //var jsonData = require('./users.json'); 
-var usersArr = [[ "k", "k", "k", "k@gmail.com", "1999-05-22"]];
+var usersDict = {} 
+usersDict["k"] = "k";
 
 
 $(document).ready(function() {
@@ -18,83 +19,127 @@ $(document).ready(function() {
 	Start();
 });
 
-// function to switch between 2 divs
+//-----------------------function to switch between 2 divs-----------------
 function toggleDiv(ToDivId)
 {
-
 	document.getElementById(visibleId).style.display = 'none';
 	document.getElementById(ToDivId).style.display = 'block';
 	visibleId = ToDivId;
-
 } 
 
-//Login form - check if exists in the users DS
+//--------------------------Login form--------------------------------
 function Login()
 {
-	
 	var username = document.getElementById('userName').value
 	var password = document.getElementById('Password').value
-
-	for (let i = 0; i < usersArr.length; i++) { 
-		if (usersArr[i][0] == username && usersArr[i][1] == password) {
-			alert('Login successful');
-			// need to open settign page ;
-			return; 
-		}
-		if (usersArr[i][0] == username && usersArr[i][1] != password) {
-			alert('The password is not correct');
-			return; 
-		}
+	// for (let i = 0; i < usersArr.length; i++) { 
+	if (usersDict[username] && usersDict[username] == password) {
+		alert('Login successful');
+		// need to open settign page ;
+		return; 
 	}
+	else if (usersDict[username] && usersDict[username] != password) {
+		alert('The password is not correct');
+		return; 
+	}
+	// }
 	alert("User is not exist");      
-
 }
 
-/////////sign up ////////////////////////
-function Signup(){
+//Sign Up form - using submitHandler in Jquery
+// function Signup(){
+// 	const signupUser =document.getElementById('username').value ;
+// 	const signupPassword = document.getElementById('password').value;
+// 	const signupFullname = document.getElementById('fullName').value;
+// 	const signupEmail = document.getElementById('email').value;
+// 	const signupBirthDate = document.getElementById('birthDate').value;
+// 	// for (let i = 0; i < usersArr.length; i++) { 
+// 	// if (signupUser in usersDict) {
+// 	// 	alert('The user name already exist, please enter ather user name');
+// 	// 	return; 
+// 	// }
+// 	// }
+// 	// const newUser = [signupUser, signupPassword,signupFullname,signupEmail,signupBirthDate];
+// 	usersDict[signupUser] = signupPassword;
+// 	alert('Signup successful');
+// 	}
 
-	const signupUser =document.getElementById('username').value ;
-	const signupPassword = document.getElementById('pass').value;
-	const signupFullname = document.getElementById('fullName').value;
-	const signupEmail = document.getElementById('email').value;
-	const signupBirthDate = document.getElementById('birthDate').value;
-	for (let i = 0; i < usersArr.length; i++) { 
-		if (usersArr[i][0] == signupUser) {
-			alert('The user name already exist, please enter ather user name');
-			return; 
+//--------------------jquery validation of Sign Up form--------------------- 
+$(document).ready(function() {
+	$("#signupForm").validate({
+		rules: {
+			username: {
+				required: true,
+				usernameExists: true
+			},
+			password: {
+				required: true,
+				strongPassword: true
+			},
+			fullName: {
+				required: true,
+				lettersonly : true
+			},
+			email: {
+				required: true,
+				email: true
+			},
+			birthDate: {
+				required: true
+			}
+		},
+		messages: {
+			username: {
+				required: "Please enter valid username.",
+				usernameExists: "this username already exist, please enter another valid username."
+			},
+			password: {
+				required: "Please enter a valid password.",
+				strongPassword: "password must be with at least 6 character and at least one letter and one number."
+			},
+			fullName: {
+				required: "Please enter your full name.",
+				lettersonly: "full name must contain only letters."
+			},
+			email: {
+				required: "Please enter a valid email address.",
+				email: "email in not valid, please enter a valid email address."
+			},
+			birthDate: {
+				required: "Please enter your birth date."
+			}
+		},
+		submitHandler: function() {
+			//add user to users dict
+			let username = document.getElementById("username").value;
+			let password = document.getElementById("password").value;
+			usersDict[username] = password;
+			let form = $("#signupForm");
+			form[0].reset();
+			// form.submit();
+			toggleDiv('welcomeDiv');
 		}
-	}
-	const newUser = [signupUser, signupPassword,signupFullname,signupEmail,signupBirthDate];
-	usersArr.push(newUser);
-	alert('Signup successful');
+	});
+});
+//-------------functions fo jquery validation of Sign Up form-----------------
+$(function() {
+	// password must be with at least 6 character and at least one letter and one number.
+	$.validator.addMethod('strongPassword', function (value) {
+		return value.length >= 6 &&
+			/\d/.test(value) &&
+			/[a-z]/i.test(value);
+	});
 
-	
-	}
-
-// /*----------------------------------valid--------------------------------------*/
-// $(function() {
-
-// 	//Password must contain at least 6 digit and contain one number and one char.
-// 	$.validator.addMethod('validPassword', function (value, element) {
-// 		return this.optional(element) ||
-// 			value.length >= 6 &&
-// 			/\d/.test(value) &&
-// 			/[a-z]/i.test(value);
-// 	});
-
-
-//     //check if username already exists
-// 	$.validator.addMethod('userExists', function (users, element) {
-// 		if(users in userDic) {
-// 			return false;
-// 		}
-// 		else{
-// 			return true;
-// 		}
-// 	});
-
-// });
-
+    //check if username already exists
+	$.validator.addMethod('usernameExists', function (user) {
+		if(user in usersDict) {
+			return false;
+		}
+		else{
+			return true;
+		}
+	});
+});
 
 
 function Start() {
