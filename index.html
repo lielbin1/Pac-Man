@@ -16,9 +16,6 @@
 			<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
 			<a class="menuItem"  href="#About" onclick="About()">About</a>
 		</div>
-		<br/>
-		<br/>
-		<br/>
 		<!-- Welcome Div -->
 		<div class="welcome" id="welcomeDiv" style="display:block;">
 			<a class="welcomeItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
@@ -29,34 +26,7 @@
 		<br/>
 
 		<!-- Registration Form -->
-		<!-- <form id="signupForm"  name="registration" style="display:none;">
-			<div class="container">
-			  <h1>Signup</h1>
-			  <p>Please fill in this form to create an account.</p>
-			  <hr>
-			  
-			  <label for="username"><b>User Name</b></label>
-			  <input type="text" placeholder="Enter User Name" name="username" id="username"  pattern="^[a-zA-Z]*$"  required="required" autocomplete="off">
-			  
-			  <label for="password"><b>Password</b></label>
-			  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters" required="required" autocomplete="off">
 
-			  <label for="fullName"><b>Full Name</b></label>
-			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName" pattern="^[a-zA-Z]*$" required="required" autocomplete="off">
-
-			  <label for="email"><b>Email</b></label>
-			  <input type="text" placeholder="Enter Email" name="email" id="email" required="required"  autocomplete="off">
-		  
-			  <label for="birthDate"><b>Birth Date</b></label>
-			  <input type="date" id="birthDate" name="birthDate"
-					value="yyyy-MM-dd"
-					min="1800-01-01" max="2025-12-31">
-			  <hr>
-			  <button type="button" class="registerbtn" onclick="Signup()">Signup</button>
-			  <button type="button" class="cancel" onclick="toggleDiv('welcomeDiv')">Cancel</button>
-
-			</div>
-		  </form> -->
 		  <form id="signupForm"  name="registration" style="display:none;">
 			<div class="container">
 			  <h1>Signup</h1>
@@ -106,9 +76,6 @@
 		<!-- settings section -->
 		
 		<section  id="gameSettingsSection" style="display:none;">
-			<br/>
-			<br/>
-			<br/>
 			<div id="Settings" >
 			<form id="settingsForm">
 				<div class="container">
@@ -130,9 +97,9 @@
 				  <p><br>
 					<label ><u>Enter balls color:</u></label><br/>
 					<label for="monstersNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
-					<input type="color" id="ball_5_color" name="5color" value="#00CED1" style="width: 7%;" >
-					<input type="color" id="ball_15_color" name="15color" value="#FF69B4"style="width: 7%;">
-					<input type="color" id="ball_25_color" name="25color" value="#00008B" style="width: 7%;">
+					<input type="color" id="ball_5_color" name="ball_5_color" value="#00CED1" style="width: 7%;" >
+					<input type="color" id="ball_15_color" name="ball_15_color" value="#FF69B4"style="width: 7%;">
+					<input type="color" id="ball_25_color" name="ball_25_color" value="#00008B" style="width: 7%;">
 				  </p>
 				 <div><br>
 					<label ><u>Enter game buttons:</u></label><br/>
@@ -145,7 +112,7 @@
 				  <br>
 				  <br>
 				  <p>
-					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2">
+					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2" onclick="toggleDiv('game')" >
 					<button id="randomGameButton" name="random"  class="formButton formButton2">random</button>
 				  </p>
 				</div>
@@ -153,20 +120,16 @@
 			</div>
 			
 		</section>
-	
 
-
-
-		<!-- <div id="score">
+		<div id="game" style="display:none;" >
+			<label for="activeuser">USER NAME:</label>
+			<input id="activeuser" type="text" />
+			
 			<label for="lblScore">SCORE:</label>
 			<input id="lblScore" type="text" />
-		</div>
-		<div id="time">
 			<label for="lblTime">TIME:</label>
 			<input id="lblTime" type="text" />
+			<canvas id="canvas" height="1200" width="1300"></canvas>
 		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
-		</div> -->
 	</body>
 </html>
