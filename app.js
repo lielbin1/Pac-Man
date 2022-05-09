@@ -1,3 +1,5 @@
+var rows = 21; 
+var cols = 21; 
 
 var context;
 var shape = new Object();
@@ -23,15 +25,18 @@ var choosen_color5;
 var choosen_color15;
 var choosen_color25;
 
+var corners_arr = [];
+var ghosts_num = 4; // defaultValue for ghosts num
+var ghost_pos_arr = [];
 
-var direction_pac;
+var direction_pac = "R"; // defaultValue for packman dir 
 
 var active_user;
 
-var clock_game;
+var clock_game; // object on board is 12
 var heart_game;
 
-
+var ghost_interval;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -196,8 +201,8 @@ function Start() {
 	updateSetting();
 	//num_of_ball = document.getElementById('ballsNum').value;
 	start_time = new Date();
-	for (var i = 0; i < 21; i++) {
-		for (var j = 0; j < 21; j++) {
+	for (var i = 0; i < rows; i++) {
+		for (var j = 0; j < cols; j++) {
 			if (board[i][j] != 4) {
 				var randomNum = Math.random(); 
 				if (randomNum <= (1.0 * num_of_ball) / cnt) {  //add food
@@ -273,18 +278,11 @@ function Start() {
 	);
 	
 	interval = setInterval(UpdatePosition, 250);
-	clock_interval = setInterval(updateClock ,200)
+	clock_interval = setInterval(updateClock ,200);
+  putGhostOnCorners();
+  ghost_interval = setInterval(UpdateGhosts, 170);
 }
-
-function updateClock(){ // add clock to the board
-	if(clock_game.exist == false){
-		var emptyCell = findRandomEmptyCell(board);
-		clock_game.i = emptyCell[0];
-		clock_game.j = emptyCell[1];
-		board[emptyCell[0]][emptyCell[1]] = 12; 
-		clock_game.exist = true;
-	}
-}
+// ---------------------------------add clock to the board----------------------------------
 
 function updateSetting(){
 	num_of_ball = document.getElementById('ballsNum').value;
@@ -297,18 +295,124 @@ function updateSetting(){
 	choosen_color15 = document.getElementById('ball_15_color').value;
 	choosen_color25 = document.getElementById('ball_25_color').value;
 
+}
+
+function updateClock(){ 
+	if(clock_game.exist){
+		var emptyCell = findRandomEmptyCell(board);
+		clock_game.i = emptyCell[0];
+		clock_game.j = emptyCell[1];
+		board[emptyCell[0]][emptyCell[1]] = 12; 
+		clock_game.exist = true;
+	}
+}
+
+function putGhostOnCorners(){
+	corners_arr[0]=[0,0];
+	corners_arr[1]=[0,cols-1];
+	corners_arr[2]=[rows-1,0];
+	corners_arr[3]=[rows-1,cols-1];
+	for(var i=0; i <ghosts_num;i++)
+	{
+		// board[corners_arr[i][0]][corners_arr[i][1]]= 20;
+    ghost_pos_arr[i] = new Object(); //state object
+    ghost_pos_arr[i].i = corners_arr[i][0];
+    ghost_pos_arr[i].j = corners_arr[i][1];
+    ghost_obj_arr[i].path = constructPathBFS(ghost_pos_arr[i], shape);
+	}
+}
+
+
+function noGhost(ghostX, ghostY) {
+	for(var k=0; k<ghost_pos_arr.length; k++)
+		if (ghostX == ghost_pos_arr[k].i && ghostY == ghost_pos_arr[k].j)
+			return false;
+	return true;
+}
+
+
+function UpdateGhosts(){
+	for (var i = 0 ; i < ghost_pos_arr.length ; i++){
+
+		var ghost = ghost_pos_arr[i]; //ghost state 
+    var nextState = ghost_pos_arr[i].path.pop(); // path constructerd in BFS function
+    ghost = nextState; // moves the ghost to the next neighbors state 
+	
 
 }
 
+//from,to can be the indexes of the from=ghost, to=pacman - turn each position to state with state.i and state.j
+function constructPathBFS(from, to){
+  var visited = new Set(); 
+  var queue = [from]; //***from is a state object
+
+  while(queue.length > 0){ 
+      var curState = queue.pop(); 
+      visited.add(curState); 
+
+      if(curState.i == to.i && curState.j == to.j){ // if we've reached the destination
+          var solPath = []; // begin path construction
+          var curr = curState; 
+          while(curr.i !== from.i && curr.j !== from.j){
+              solPath.push(current);
+              curr = curr.prev;
+          }
+          solPath.push(from);
+          solPath.reverse();// change from dest - start, to start - dest
+          return solPath; // the fully constructed path
+      }
+      var neighbors = getAllNeighbors(curState);
+      for (var i = 0 ; i < neighbors.length ; i++){
+        if (!(neighbors[i] in visited)){
+          neighbors[i].prev = curState;
+          visite.add([neighbors[i]]);
+          queue.push(neighbors[i]);
+        }
+      }
+  }
+  return [] // no path found
+}
+
+function getNeighbors(state){
+	var neighbors = new Array();
+	if (state.j > 0 && board[state.i][state.j - 1] != 4){
+		var up = new Object;
+		up.i = state.i;
+		up.j = state.j - 1;
+		neighbors.push(up);
+	}
+	if(state.j < boardCol - 1 && board[state.i][state.j + 1] != 4){
+		var down = new Object;
+		down.i = state.i;
+		down.j = state.j + 1;
+		neighbors.push(down);
+	}
+	if(state.i > 0 && board[state.i - 1][state.j] != 4){
+		var left = new Object;
+		left.i = state.i - 1;
+		left.j = state.j;
+		neighbors.push(left);
+	}
+	if(state.i < boardRow - 1 && board[state.i + 1][state.j] != 4){
+		var rightState = new Object;
+		rightState.i = state.i + 1;
+		rightState.j = state.j;
+		neighbors.push(rightState);
+	}
+	return neighbors;
+}
+
+
 function findRandomEmptyCell(board) {
-	var i = Math.floor(Math.random() * 9 + 1);
-	var j = Math.floor(Math.random() * 9 + 1);
+	var i = Math.floor(Math.random() * 20 + 1);
+	var j = Math.floor(Math.random() * 20 + 1);
 	while (board[i][j] != 0) {
-		i = Math.floor(Math.random() * 9 + 1);
-		j = Math.floor(Math.random() * 9 + 1);
+		i = Math.floor(Math.random() * 20 + 1);
+		j = Math.floor(Math.random() * 20 + 1);
 	}
 	return [i, j];
 }
+
 
 function GetKeyPressed() {
 	if (keysDown[38]) {
@@ -331,8 +435,8 @@ function Draw() {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	activeuser.value = active_user;
-	for (var i = 0; i < 21; i++) {
-		for (var j = 0; j < 21; j++) {
+	for (var i = 0; i < rows; i++) {
+		for (var j = 0; j < cols; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
@@ -405,68 +509,86 @@ function Draw() {
 				context.fill();
 			}
 			else if(board[i][j] == 12){ //clock
-				context.beginPath();
-				let clock_image = new Image();
+				// context.beginPath();
+				var clock_image = new Image();
 				clock_image.src = "images/clock.png";
-				context.drawImage(clock_image,center.x +30, center.y +30 , 60,60)
-				
+				context.drawImage(clock_image,center.x-5 , center.y-5 , 20,20)		
 			}
-
+      draw_ghost(context,30,30);
+        // console.log("here")
 		}
 	}
 }
 
-function UpdatePosition() {
-	board[shape.i][shape.j] = 0;
-	var x = GetKeyPressed();
-	if (x == 1) {
-		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
-			shape.j--;
-			direction_pac = 'U'
-		}
-	}
-	if (x == 2) {
-		if (shape.j < 16 && board[shape.i][shape.j + 1] != 4) {
-			shape.j++;
-			direction_pac = 'D'
-		}
-	}
-	if (x == 3) {
-		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
-			shape.i--;
-			direction_pac = 'L'
-		}
-	}
-	if (x == 4) {
-		if (shape.i < 20 && board[shape.i + 1][shape.j] != 4) {
-			shape.i++;
-			direction_pac = 'R'
-		}
-	}
+function draw_ghost(ctx,height,width){
+    for (var k=0; k<ghost_pos_arr.length; k++) {
+      y = ghost_pos_arr[k].i * 2* 30 + 30;
+      x = ghost_pos_arr[k].j* 2 * 30 + 30;
+      ctx.beginPath();
+      ctx.fillStyle = "blue" ;
+      ctx.arc(x , y, width, Math.PI, 2* Math.PI);
+      ctx.lineTo(x + width, y + height);
+      ctx.arc(x + width / 2, y + height, width * 0.5, 0, Math.PI);
+      ctx.arc(x + width / 2 - width , y + height, width * 0.5, 0, Math.PI);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "black";
+      ctx.stroke();
+    }
+  }
 
 
-	if (board[shape.i][shape.j] == 5) {
-		score+=5;
-		balls_left--;
-	}
-	else if (board[shape.i][shape.j] == 15) {
-		score+=15;
-		balls_left--;
-	}
-	else if (board[shape.i][shape.j] == 25) {
-		score+=25;
-		balls_left--;
-	}
-	board[shape.i][shape.j] = 2;
-	var currentTime = new Date();
-	time_elapsed = (currentTime - start_time) / 1000;
-	if (score >= 20 && time_elapsed <= 10) {
-		pac_color = "green";
-	}
-	if (score == 50) {
-		window.clearInterval(interval);
-		window.alert("Game completed");
-	} else {
-		Draw();
-	}
+  function UpdatePosition() {
+    board[shape.i][shape.j] = 0;
+    var x = GetKeyPressed();
+    if (x == 1) {
+      if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
+        shape.j--;
+        direction_pac = 'U'
+      }
+    }
+    if (x == 2) {
+      if (shape.j < 16 && board[shape.i][shape.j + 1] != 4) {
+        shape.j++;
+        direction_pac = 'D'
+      }
+    }
+    if (x == 3) {
+      if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
+        shape.i--;
+        direction_pac = 'L'
+      }
+    }
+    if (x == 4) {
+      if (shape.i < 20 && board[shape.i + 1][shape.j] != 4) {
+        shape.i++;
+        direction_pac = 'R'
+      }
+    }
+
+
+    if (board[shape.i][shape.j] == 5) {
+      score+=5;
+      balls_left--;
+    }
+    else if (board[shape.i][shape.j] == 15) {
+      score+=15;
+      balls_left--;
+    }
+    else if (board[shape.i][shape.j] == 25) {
+      score+=25;
+      balls_left--;
+    }
+    board[shape.i][shape.j] = 2;
+    var currentTime = new Date();
+    time_elapsed = (currentTime - start_time) / 1000;
+    // if (score >= 20 && time_elapsed <= 10) {
+    // 	pac_color = "green";
+    // }
+    // if (score == 50) {
+    // 	window.clearInterval(interval);
+    // 	window.alert("Game completed");
+    // } else {
+      Draw();
+    // }
 }
