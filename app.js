@@ -228,10 +228,12 @@ function Start() {
 					num_of_ball--;
 					
 				} else if (randomNum < (1.0 * (pacman_remain + num_of_ball)) / cnt) {  // add pacman
-					shape.i = i;
-					shape.j = j;
-					pacman_remain--;
-					board[i][j] = 2;
+					if(i!=0 && i!=rows-1 && j!=0 && j!=cols-1){
+						shape.i = i;
+						shape.j = j;
+						pacman_remain--;
+						board[i][j] = 2;
+					}
 				} else {
 					board[i][j] = 0;
 				}
@@ -257,10 +259,12 @@ function Start() {
 	}
 	while(pacman_remain != 0 ){
 		var emptyCell = findRandomEmptyCell(board);
-		shape.i = emptyCell[0];
-		shape.j = emptyCell[1];
-		pacman_remain--;
-		board[emptyCell[0]][emptyCell[1]] = 2;
+		if(emptyCell[0]!=0 && emptyCell[0]!=rows-1 && emptyCell[1]!=0 && emptyCell[1]!=cols-1){
+			shape.i = emptyCell[0];
+			shape.j = emptyCell[1];
+			pacman_remain--;
+			board[emptyCell[0]][emptyCell[1]] = 2;
+		}
 	}
 
 	keysDown = {};
@@ -281,8 +285,8 @@ function Start() {
 	
 	interval = setInterval(UpdatePosition, 250);
 	clock_interval = setInterval(updateClock ,200);
-  putGhostOnCorners();
-//   ghost_interval = setInterval(UpdateGhosts, 170);
+  	putGhostOnCorners();
+  	// ghost_interval = setInterval(UpdateGhosts, 250);
 }
 // ---------------------------------add clock to the board----------------------------------
 
@@ -316,11 +320,12 @@ function putGhostOnCorners(){
 	corners_arr[3]=[rows-1,cols-1];
 	for(var i=0; i <ghosts_num;i++)
 	{
-		// board[corners_arr[i][0]][corners_arr[i][1]]= 20;
+		board[corners_arr[i][0]][corners_arr[i][1]]= 20;
 		ghost_pos_arr[i] = new Object(); //state object
 		ghost_pos_arr[i].i = corners_arr[i][0];
 		ghost_pos_arr[i].j = corners_arr[i][1];
-		ghost_pos_arr[i].path = constructPathBFS(ghost_pos_arr[i], shape);
+		// var ghost = ghost_pos_arr[i];
+		// ghost_pos_arr[i].path = constructPathBFS(corners_arr[i][0], corners_arr[i][1]);
 	}
 }
 
@@ -334,45 +339,50 @@ function noGhost(ghostX, ghostY) {
 
 
 function UpdateGhosts(){
+// 	for (var i = 0 ; i < ghost_pos_arr.length ; i++){
+// 		var ghostX = ghost_pos_arr[i].i;
+// 		var ghostY = ghost_pos_arr[i].j;
+
+// 		ghost_pos_arr[i].path = constructPathBFS(ghostX, ghostY);
+// 		var nextState = ghost_pos_arr[i].path.shift(); // path constructerd in BFS function
+// 		ghost_pos_arr[i] = nextState; // moves the ghost to the next neighbors state 
+// }
+	var changePath = 5 ; 
+	var reCP = false;
 	for (var i = 0 ; i < ghost_pos_arr.length ; i++){
-
-		var ghost = ghost_pos_arr[i]; //ghost state 
-		var nextState = ghost_pos_arr[i].path.pop(); // path constructerd in BFS function
-		ghost = nextState; // moves the ghost to the next neighbors state 
-
-}
-}
-
-//from,to can be the indexes of the from=ghost, to=pacman - turn each position to state with state.i and state.j
-function constructPathBFS(from, to){
-  var visited = new Set(); 
-  var queue = [from]; //***from is a state object
-
-  while(queue.length > 0){ 
-      var curState = queue.pop(); 
-      visited.add(curState); 
-
-      if(curState.i == to.i && curState.j == to.j){ // if we've reached the destination
-          var solPath = []; // begin path construction
-          var curr = curState; 
-          while(curr.i !== from.i && curr.j !== from.j){
-              solPath.push(current);
-              curr = curr.prev;
-          }
-          solPath.push(from);
-          solPath.reverse();// change from dest - start, to start - dest
-          return solPath; // the fully constructed path
-      }
-      var neighbors = getAllNeighbors(curState);
-      for (var i = 0 ; i < neighbors.length ; i++){
-        if (!(neighbors[i] in visited)){
-          neighbors[i].prev = curState;
-          visite.add([neighbors[i]]);
-          queue.push(neighbors[i]);
-        }
-      }
-  }
-  return [] // no path found
+		var ghostX = ghost_pos_arr[i].i;
+		var ghostY = ghost_pos_arr[i].j;
+		// if (board[ghostX][ghostY] == 2 || (ghostX == shape.i && ghostY == shape.j) || (ghost_pos_arr[shape.i][shape.j] == 20)){
+		// 	//packman eaten by ghost
+		// 	// break;
+		// }
+		if (ghost_pos_arr[i].path.length == 0 || changePath == 0){
+			reCP = true;
+			ghost_pos_arr[i].path = constructPathBFS(ghostX, ghostY);
+		}
+		var nextState = ghost_pos_arr[i].path.shift();
+		consol.log(nextState.i , nextState.j)
+		if (ghost_pos_arr[nextState.i][nextState.j] == 20){
+			ghost_pos_arr[i].path = constructPathBFS(ghostX, ghostY);
+			var nextState = ghost_pos_arr[i].path.shift();
+		}
+		ghost_pos_arr[ghostX][ghostY] = 0;
+		ghost_pos_arr[nextState.i][nextState.j] = 20;
+		ghost_pos_arr[i].i = nextState.i;
+		ghost_pos_arr[i].j = nextState.j;
+		ghostX = nextState.i;
+		ghostY = nextState.j;
+		if (board[ghostX][ghostY] == 2 || (ghostX == shape.i && ghostY == shape.j) || ghost_pos_arr[shape.i][shape.j] == 20){
+			//packman eaten by ghost
+			// break;
+		}
+	}
+	if (reCP){
+		reCP = false;
+		changePath = 5;
+	} else{
+		changePath--;
+	}
 }
 
 function getNeighbors(state){
@@ -383,7 +393,7 @@ function getNeighbors(state){
 		up.j = state.j - 1;
 		neighbors.push(up);
 	}
-	if(state.j < boardCol - 1 && board[state.i][state.j + 1] != 4){
+	if(state.j < cols - 1 && board[state.i][state.j + 1] != 4){
 		var down = new Object;
 		down.i = state.i;
 		down.j = state.j + 1;
@@ -395,14 +405,59 @@ function getNeighbors(state){
 		left.j = state.j;
 		neighbors.push(left);
 	}
-	if(state.i < boardRow - 1 && board[state.i + 1][state.j] != 4){
-		var rightState = new Object;
-		rightState.i = state.i + 1;
-		rightState.j = state.j;
-		neighbors.push(rightState);
+	if(state.i < rows - 1 && board[state.i + 1][state.j] != 4){
+		var right = new Object;
+		right.i = state.i + 1;
+		right.j = state.j;
+		neighbors.push(right);
 	}
 	return neighbors;
 }
+
+
+//from,to can be the indexes of the from=ghost, to=pacman - turn each position to state with state.i and state.j
+function constructPathBFS(fromX, fromY){
+  var visited = []; 
+  var queue = []; //***from is a state object
+  var neighbors = [];
+  var visitedKey = fromX.toString() + " " + fromY.toString();
+  var ghostState = new Object();
+  ghostState.i = fromX;
+  ghostState.j = fromY;
+  var pacmanState = new Object();
+  pacmanState.i = shape.i;
+  pacmanState.j = shape.j;
+
+  visited[visitedKey] = ghostState;
+  queue.push(ghostState);
+
+  while(queue.length > 0){ 
+      var curState = queue.shift(); 
+
+      if(curState.i == pacmanState.i && curState.j == pacmanState.j){ // if we've reached the destination
+          var solPath = []; // begin path construction
+          var curr = new Object();
+		  curr = curState; 
+		  solPath.unshift(curr);
+          while(!(curr.i == ghostState.i && curr.j == ghostState.j)){
+             var current = curr.prev; 
+			 solPath.unshift(current);
+		  }
+          return solPath; // the fully constructed path
+      }
+      neighbors = getNeighbors(curState);
+      for (var i = 0 ; i < neighbors.length ; i++){
+		var neighborsKey = neighbors[i].i.toString() + " " + neighbors[i].j.toString();
+        if (!(neighborsKey in visited)){
+          neighbors[i].prev = curState;
+          visited[neighborsKey] = neighbors[i];
+          queue.push(neighbors[i]);
+        }
+      }
+  }
+  return [] // no path found
+}
+
 
 
 function findRandomEmptyCell(board) {
@@ -514,9 +569,12 @@ function Draw() {
 				context.beginPath();
 				var clock_image = new Image();
 				clock_image.src = "images/clock.png";
-				context.drawImage(clock_image,center.x-5 , center.y-5 , 20,20)		
+				context.drawImage(clock_image,center.x-5 , center.y-5 , 50,50)		
 			}
-      draw_ghost(context,30,30);
+			if(board[i][j] == 20){
+				draw_ghost(context,30,30);
+
+			}
         // console.log("here")
 		}
 	}
