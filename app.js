@@ -337,8 +337,8 @@ function UpdateGhosts(){
 		var ghost = ghost_pos_arr[i]; //ghost state 
     var nextState = ghost_pos_arr[i].path.pop(); // path constructerd in BFS function
     ghost = nextState; // moves the ghost to the next neighbors state 
-	
 
+}
 }
 
 //from,to can be the indexes of the from=ghost, to=pacman - turn each position to state with state.i and state.j
