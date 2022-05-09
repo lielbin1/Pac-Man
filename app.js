@@ -35,10 +35,15 @@ var active_user;
 
 var clock_game; // object on board is 12
 var time_left;
+var live_left;
 
 var heart_game;
 
 var ghost_interval;
+
+
+var ghost_pos_board;
+var ghost_obj_arr;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -54,29 +59,65 @@ function toggleDiv(ToDivId)
 } 
 
 //--------------------------Login form--------------------------------
-function Login()
-{
-	var username = document.getElementById('userName').value
-	var password = document.getElementById('Password').value
-	// for (let i = 0; i < usersArr.length; i++) { 
-	if (usersDict[username] && usersDict[username] == password) {
-		alert('Login successful');
+//--------------------jquery validation of Login form--------------------- 
+$("#logInForm").validate({
+	rules: {
+		logIn_name: {
+			required: true,
+		},
+		logIn_password: {
+			required: true,
+			validateUser: true
+		}
+	},
+	messages: {
+		logIn_name: {
+			required: "Please enter username."
+		},
+		logIn_password: {
+			required: "Please enter an password",
+			validateUser: "Username or password is not valid."
+		}
+	},
+	submitHandler: function () {
+		game_username = document.getElementById("userName").value;
+		//document.getElementById("NotLogIn").style.display = "none";
+		// UserScreenON();
+		// settingON();
+		//reset form details
+		let form = $("#logInForm");
+		form[0].reset();
 		toggleDiv('gameSettingsSection');
-		// need to open settign page ;
-		active_user = username;
-		return; 
+
+
 	}
-	else if (usersDict[username] && usersDict[username] != password) {
-		alert('The password is not correct');
-		return; 
+	
+});
+
+//--------------------jquery validation of Setting form--------------------- 
+
+$("#setting_form").validate({
+	rules: {
+		RIGHT_name: {
+			keyChangeCheck:true,
+		},
+		duration_name: {
+			gameTimeMoreThen60: 60
+		}
+	},
+	messages: {
+		RIGHT_name: {			
+			keyChangeCheck: "This key already taken by another action."
+		},
+		duration_name: {
+			gameTimeMoreThen60: "Minimum game duration is 60 second."
+		}
+	},
+	submitHandler: function () {
+		Start();
+		// UserScreenConsoleON();
 	}
-	// }
-	alert("User is not exist");      
-}
-
-
-
-
+});
 
 //--------------------jquery validation of Sign Up form--------------------- 
 $(document).ready(function() {
@@ -162,21 +203,21 @@ $(function() {
 function Start() {
 	board = 
 	[
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+		[0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 4, 0, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 0, 4, 0, 0, 0, 0, 0],
 		[0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 4, 4, 4],
 		[0, 4, 0, 4, 0, 4, 0, 0, 4, 0, 4, 4, 0, 4, 4, 0, 0, 0, 0, 0, 0],
 		[0, 4, 0, 4, 4, 4, 0, 0, 4, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0],
-		[0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 4, 4, 0, 4, 0, 0, 4, 4, 0],
+		[0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 4, 4, 0, 4, 0, 0, 0, 4, 0],
 		[0, 4, 4, 4, 4, 0, 0, 4, 4, 0, 4, 0, 0, 4, 0, 0, 0, 4, 0, 4, 4],
 		[0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 4, 0, 0, 0],
-		[0, 4, 4, 0, 0, 0, 4, 0, 4, 4, 4, 4, 0, 4, 0, 0, 0, 4, 0, 0, 0],
+		[0, 4, 4, 0, 0, 0, 4, 0, 4, 4, 4, 4, 0, 4, 0, 0, 0, 4, 4, 4, 0],
 		[0, 4, 0, 0, 4, 0, 4, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0],
-		[0, 0, 0, 0, 4, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 4, 4, 4, 4, 0, 0],
-		[4, 4, 4, 4, 4, 0, 4, 0, 4, 0, 0, 4, 4, 4, 4, 0, 0, 0, 4, 0, 0],
+		[0, 0, 0, 0, 4, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 4, 4, 4, 4, 0, 4],
+		[4, 4, 4, 4, 4, 0, 4, 0, 4, 0, 0, 4, 4, 4, 4, 0, 0, 0, 4, 0, 4],
 		[0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0],
-		[0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 4, 4, 0, 0],
-		[0, 4, 4, 4, 4, 0, 4, 0, 4, 4, 0, 4, 4, 4, 4, 0, 0, 0, 4, 0, 0],
+		[0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 4, 0, 0, 0],
+		[0, 4, 4, 4, 4, 0, 4, 0, 4, 4, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0],
 		[0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0],
 		[0, 4, 0, 4, 4, 0, 4, 0, 4, 0, 4, 4, 4, 4, 4, 0, 0, 4, 4, 4, 4],
 		[0, 4, 0, 4, 0, 0, 4, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -184,6 +225,7 @@ function Start() {
 		[0, 4, 0, 4, 0, 0, 4, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0],
 		[0, 4, 0, 4, 0, 0, 4, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0],
 	];
+	updateSetting();
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 441;
@@ -191,6 +233,9 @@ function Start() {
 	// objects clock and heart for the special functionality
 	heart_game = new Object();
 	clock_game = new Object();
+
+	ghost_pos_board = new Array();
+	ghost_obj_arr = new Array();
 
 
 	heart_game.exist = false;
@@ -200,10 +245,11 @@ function Start() {
 	clock_game.eaten = false;
 
 	var pacman_remain = 1;
-	updateSetting();
+	
 	//num_of_ball = document.getElementById('ballsNum').value;
 	start_time = new Date();
 	for (var i = 0; i < rows; i++) {
+		ghost_pos_board[i] = new Array();
 		for (var j = 0; j < cols; j++) {
 			if (board[i][j] != 4) {
 				var randomNum = Math.random(); 
@@ -241,6 +287,7 @@ function Start() {
 			}
 		}
 	}
+	// addGhosts();
 	while (num_of_ball > 0) {
 		var emptyCell = findRandomEmptyCell(board);
 		if(num_of_5ball != 0){
@@ -283,11 +330,14 @@ function Start() {
 		false
 	);
 	
-	interval = setInterval(UpdatePosition, 250);
-	clock_interval = setInterval(updateClock ,200);
+	interval = setInterval(UpdatePosition, 120);
+	clock_interval = setInterval(updateClock ,4000);
+	heart_interval = setInterval(updateHeart ,5000);
   	putGhostOnCorners();
   	// ghost_interval = setInterval(UpdateGhosts, 250);
 }
+
+
 // ---------------------------------add clock to the board----------------------------------
 
 function updateSetting(){
@@ -312,6 +362,17 @@ function updateClock(){
 		clock_game.exist = true;
 	}
 }
+
+function updateHeart(){ 
+	if(heart_game.exist == false){
+		var emptyCell = findRandomEmptyCell(board);
+		clock_game.i = emptyCell[0];
+		clock_game.j = emptyCell[1];
+		board[emptyCell[0]][emptyCell[1]] = 13; 
+		heart_game.exist = true;
+	}
+}
+
 
 function putGhostOnCorners(){
 	corners_arr[0]=[0,0];
@@ -571,6 +632,12 @@ function Draw() {
 				clock_image.src = "images/clock.png";
 				context.drawImage(clock_image,center.x-5 , center.y-5 , 50,50)		
 			}
+			else if(board[i][j] == 13){ //Heart
+				context.beginPath();
+				var Heart_image = new Image();
+				Heart_image.src = "heart.png";
+				context.drawImage(Heart_image,center.x-5 , center.y-5 , 50,50)		
+			}
 			if(board[i][j] == 20){
 				draw_ghost(context,30,30);
 
@@ -608,7 +675,7 @@ function draw_ghost(ctx,height,width){
       }
     }
     if (x == 2) {
-      if (shape.j < 16 && board[shape.i][shape.j + 1] != 4) {
+      if (shape.j < cols-1 && board[shape.i][shape.j + 1] != 4) {
         shape.j++;
         direction_pac = 'D'
       }
@@ -620,7 +687,7 @@ function draw_ghost(ctx,height,width){
       }
     }
     if (x == 4) {
-      if (shape.i < 20 && board[shape.i + 1][shape.j] != 4) {
+      if (shape.i < rows-1 && board[shape.i + 1][shape.j] != 4) {
         shape.i++;
         direction_pac = 'R'
       }
@@ -641,10 +708,15 @@ function draw_ghost(ctx,height,width){
     }
 	else if(board[shape.i][shape.j] == 12){
 		time_left += 10;
-		clock_game.exist == false;
+		clock_game.exist = false;
 
 	}
-    board[shape.i][shape.j] = 2;
+	else if(board[shape.i][shape.j] == 13){
+		live_left += 1;
+		heart_game.exist = false;
+	}
+    
+	board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
     // if (score >= 20 && time_elapsed <= 10) {
