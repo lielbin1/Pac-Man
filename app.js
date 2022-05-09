@@ -34,6 +34,8 @@ var direction_pac = "R"; // defaultValue for packman dir
 var active_user;
 
 var clock_game; // object on board is 12
+var time_left;
+
 var heart_game;
 
 var ghost_interval;
@@ -280,7 +282,7 @@ function Start() {
 	interval = setInterval(UpdatePosition, 250);
 	clock_interval = setInterval(updateClock ,200);
   putGhostOnCorners();
-  ghost_interval = setInterval(UpdateGhosts, 170);
+//   ghost_interval = setInterval(UpdateGhosts, 170);
 }
 // ---------------------------------add clock to the board----------------------------------
 
@@ -298,7 +300,7 @@ function updateSetting(){
 }
 
 function updateClock(){ 
-	if(clock_game.exist){
+	if(clock_game.exist == false){
 		var emptyCell = findRandomEmptyCell(board);
 		clock_game.i = emptyCell[0];
 		clock_game.j = emptyCell[1];
@@ -315,10 +317,10 @@ function putGhostOnCorners(){
 	for(var i=0; i <ghosts_num;i++)
 	{
 		// board[corners_arr[i][0]][corners_arr[i][1]]= 20;
-    ghost_pos_arr[i] = new Object(); //state object
-    ghost_pos_arr[i].i = corners_arr[i][0];
-    ghost_pos_arr[i].j = corners_arr[i][1];
-    ghost_obj_arr[i].path = constructPathBFS(ghost_pos_arr[i], shape);
+		ghost_pos_arr[i] = new Object(); //state object
+		ghost_pos_arr[i].i = corners_arr[i][0];
+		ghost_pos_arr[i].j = corners_arr[i][1];
+		ghost_pos_arr[i].path = constructPathBFS(ghost_pos_arr[i], shape);
 	}
 }
 
@@ -335,8 +337,8 @@ function UpdateGhosts(){
 	for (var i = 0 ; i < ghost_pos_arr.length ; i++){
 
 		var ghost = ghost_pos_arr[i]; //ghost state 
-    var nextState = ghost_pos_arr[i].path.pop(); // path constructerd in BFS function
-    ghost = nextState; // moves the ghost to the next neighbors state 
+		var nextState = ghost_pos_arr[i].path.pop(); // path constructerd in BFS function
+		ghost = nextState; // moves the ghost to the next neighbors state 
 
 }
 }
@@ -509,7 +511,7 @@ function Draw() {
 				context.fill();
 			}
 			else if(board[i][j] == 12){ //clock
-				// context.beginPath();
+				context.beginPath();
 				var clock_image = new Image();
 				clock_image.src = "images/clock.png";
 				context.drawImage(clock_image,center.x-5 , center.y-5 , 20,20)		
@@ -579,6 +581,11 @@ function draw_ghost(ctx,height,width){
       score+=25;
       balls_left--;
     }
+	else if(board[shape.i][shape.j] == 12){
+		time_left += 10;
+		clock_game.exist == false;
+
+	}
     board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
@@ -589,6 +596,7 @@ function draw_ghost(ctx,height,width){
     // 	window.clearInterval(interval);
     // 	window.alert("Game completed");
     // } else {
+	
       Draw();
     // }
 }
