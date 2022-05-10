@@ -1,8 +1,17 @@
 
+#canvas{
+   border: 1px solid black;
+   background: #060606;
+	  /* background: -moz-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
+	  background: -webkit-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
+	  background: linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%); */
+
+   }
+
 /* ---------------------------Login Form------------------------------ */
 /* Bordered form */
 form {
-    border: 3px solid #f1f1f1;
+    border: 3px solid #f4f2f2;
   }
   
   /* Full-width inputs */
@@ -38,6 +47,7 @@ form {
     background-color: #f44336;
   }
   
+ 
   /* Center the avatar image inside this container */
   .imgcontainer {
     text-align: center;

@@ -14,7 +14,7 @@ var visibleId = "game"; // need to cange welcomeDiv
 //var jsonData = require('./users.json'); 
 var usersDict = {} 
 usersDict["k"] = "k";
-var num_of_ball = 70;
+var num_of_ball = 70;//-------initiallll---------
 var balls_left;
 
 var num_of_5ball;
@@ -26,18 +26,20 @@ var choosen_color15;
 var choosen_color25;
 
 var corners_arr = [];
-var ghosts_num = 4; // defaultValue for ghosts num
-var ghost_pos_arr = [];
+var ghosts_num = 4; // defaultValue for ghosts num  -------initiallll---
+var ghost_pos_arr = new Array();
 
 var direction_pac = "R"; // defaultValue for packman dir 
 
 var active_user;
 
 var clock_game; // object on board is 12
-var time_left;
-var live_left;
-
+var time_left = 60; //need to get from the user - initiallll
+var live_left = 5; //initiallll----------
 var heart_game;
+var bonus_game;
+
+ 
 
 var ghost_interval;
 
@@ -47,7 +49,7 @@ var ghost_obj_arr;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
-	Start();
+	// Start(); //need move to login or new game
 });
 
 //-----------------------function to switch between 2 divs-----------------
@@ -59,65 +61,80 @@ function toggleDiv(ToDivId)
 } 
 
 //--------------------------Login form--------------------------------
-//--------------------jquery validation of Login form--------------------- 
-$("#logInForm").validate({
-	rules: {
-		logIn_name: {
-			required: true,
-		},
-		logIn_password: {
-			required: true,
-			validateUser: true
-		}
-	},
-	messages: {
-		logIn_name: {
-			required: "Please enter username."
-		},
-		logIn_password: {
-			required: "Please enter an password",
-			validateUser: "Username or password is not valid."
-		}
-	},
-	submitHandler: function () {
-		game_username = document.getElementById("userName").value;
-		//document.getElementById("NotLogIn").style.display = "none";
-		// UserScreenON();
-		// settingON();
-		//reset form details
-		let form = $("#logInForm");
-		form[0].reset();
-		toggleDiv('gameSettingsSection');
-
-
+function Login()
+{
+	var username = document.getElementById('userName').value
+	var password = document.getElementById('Password').value
+	// for (let i = 0; i < usersArr.length; i++) { 
+	if (usersDict[username] && usersDict[username] == password) {
+		alert('Login successful');
+		active_user = username;
+		// need to open settign page ;
+		toggleDiv('gameSettingsSection')
+		return; 
 	}
+	else if (usersDict[username] && usersDict[username] != password) {
+		alert('The password is not correct');
+		return; 
+	}
+	// }
+	alert("User is not exist");      
+}
+
+
+//--------------------Setting form--------------------- 
+function updateSetting(){
+	num_of_ball = document.getElementById('ballsNum').value;
 	
-});
+	num_of_5ball = Math.floor(0.6 * num_of_ball);
+	num_of_15ball = Math.floor(0.3 * num_of_ball);
+	num_of_25ball = Math.floor(0.1 * num_of_ball);
 
-//--------------------jquery validation of Setting form--------------------- 
+	choosen_color5 = document.getElementById('ball_5_color').value;
+	choosen_color15 = document.getElementById('ball_15_color').value;
+	choosen_color25 = document.getElementById('ball_25_color').value;
 
-$("#setting_form").validate({
-	rules: {
-		RIGHT_name: {
-			keyChangeCheck:true,
-		},
-		duration_name: {
-			gameTimeMoreThen60: 60
-		}
-	},
-	messages: {
-		RIGHT_name: {			
-			keyChangeCheck: "This key already taken by another action."
-		},
-		duration_name: {
-			gameTimeMoreThen60: "Minimum game duration is 60 second."
-		}
-	},
-	submitHandler: function () {
-		Start();
-		// UserScreenConsoleON();
+	time_left = document.getElementById('gameTime').value;
+	ghosts_num = document.getElementById('ghostsNum').value;
+	toggleDiv('game')
+	Start();
+
+}
+
+function random_setting(){
+	num_of_ball = generateRandom(50,90);
+	num_of_5ball = Math.floor(0.6 * num_of_ball);
+	num_of_15ball = Math.floor(0.3 * num_of_ball);
+	num_of_25ball = Math.floor(0.1 * num_of_ball);
+
+	choosen_color5 = generateRandomColor()
+	choosen_color15 = generateRandomColor()
+	choosen_color25 = generateRandomColor()
+
+	time_left = generateRandom(60,90);
+	ghosts_num = generateRandom(1,4);
+	toggleDiv('game')
+	//keyboard
+	Start();
+
+
+}
+function generateRandomColor() {
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+	  color += letters[Math.floor(Math.random() * 16)];
 	}
-});
+	return color;
+  }
+  
+function generateRandom(min, max) {
+    let difference = max - min;
+    let rand = Math.random();
+    rand = Math.floor( rand * difference);
+    rand = rand + min;
+    return rand;
+}
 
 //--------------------jquery validation of Sign Up form--------------------- 
 $(document).ready(function() {
@@ -225,7 +242,7 @@ function Start() {
 		[0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0],
 		[0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0],
 	];
-	updateSetting();
+	// updateSetting();
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 441;
@@ -233,10 +250,12 @@ function Start() {
 	// objects clock and heart for the special functionality
 	heart_game = new Object();
 	clock_game = new Object();
+	bonus_game = new Object();
+	bonus_game.j = 0;
+	bonus_game.i = 0;
 
 	ghost_pos_board = new Array();
 	ghost_obj_arr = new Array();
-
 
 	heart_game.exist = false;
 	heart_game.eaten = false;
@@ -335,23 +354,13 @@ function Start() {
 	heart_interval = setInterval(updateHeart ,5000);
   	putGhostOnCorners();
   	ghost_interval = setInterval(UpdateGhosts, 250);
+	bonus_interval = setInterval(UpdateBonus, 20000);
 }
 
 
 // ---------------------------------add clock to the board----------------------------------
 
-function updateSetting(){
-	num_of_ball = document.getElementById('ballsNum').value;
-	
-	num_of_5ball = Math.floor(0.6 * num_of_ball);
-	num_of_15ball = Math.floor(0.3 * num_of_ball);
-	num_of_25ball = Math.floor(0.1 * num_of_ball);
 
-	choosen_color5 = document.getElementById('ball_5_color').value;
-	choosen_color15 = document.getElementById('ball_15_color').value;
-	choosen_color25 = document.getElementById('ball_25_color').value;
-
-}
 
 function updateClock(){ 
 	if(clock_game.exist == false){
@@ -363,35 +372,46 @@ function updateClock(){
 	}
 }
 
+//----------------------add heart to the board------------------------
+
 function updateHeart(){ 
 	if(heart_game.exist == false){
 		var emptyCell = findRandomEmptyCell(board);
-		clock_game.i = emptyCell[0];
-		clock_game.j = emptyCell[1];
+		heart_game.i = emptyCell[0];
+		heart_game.j = emptyCell[1];
 		board[emptyCell[0]][emptyCell[1]] = 13; 
 		heart_game.exist = true;
 	}
 }
 
+//----------------------add bonus to the board------------------------
+
+function UpdateBonus(){ 
+	board[bonus_game.i][bonus_game.j] = 0;
+	var emptyCell = findRandomEmptyCell(board);
+	bonus_game.i = emptyCell[0];
+	bonus_game.j = emptyCell[1];
+	board[emptyCell[0]][emptyCell[1]] = 50; 	
+}
 
 function putGhostOnCorners(){
 	corners_arr[0]=[0,0];
 	corners_arr[1]=[0,cols-1];
 	corners_arr[2]=[rows-1,0];
 	corners_arr[3]=[rows-1,cols-1];
+
 	for(var i=0; i <ghosts_num;i++)
 	{
 		ghost_pos_arr[i] = new Object(); //state object
 		ghost_pos_arr[i].i = corners_arr[i][0];
 		ghost_pos_arr[i].j = corners_arr[i][1];
-		// var ghost = ghost_pos_arr[i];
-		// ghost_pos_arr[i].path = constructPathBFS(corners_arr[i][0], corners_arr[i][1]);
+
 	}
 }
 
 
 function noGhost(ghostX, ghostY) {
-	for(var k=0; k< ghosts_num; k++)
+	for(var k=0; k< ghost_pos_arr.length; k++)
 		if (ghostX == ghost_pos_arr[k].i && ghostY == ghost_pos_arr[k].j)
 			return false;
 	return true;
@@ -399,53 +419,42 @@ function noGhost(ghostX, ghostY) {
 
 
 function UpdateGhosts(){
-	// var distsleft;
-	// var distright;
-	// var distup;
-	// var distdown;
-	//check randomly if calc the dist by i or by j, the minimal distance between x and y position
-	var pac_ghost_dist_i; 
-	var pac_ghost_dist_j;
-	var random_position;
+	var up;
+	var down;
+	var left;
+	var right;
 
-	for(var k=0 ; k<ghosts_num; k++){
-		// distsleft=rows*cols;
-		// distright=rows*cols;
-		// distup=rows*cols;
-		// distdown=rows*cols;
-		// random_position = Math.random() * 2 ; // Returns a random integer from 0 to 1
-		pac_ghost_dist_i = ghost_pos_arr[k].i - shape.i; 
-		pac_ghost_dist_j = ghost_pos_arr[k].j - shape.j; 
-		var minDist= Math.min(pac_ghost_dist_i,pac_ghost_dist_j);
-		if(Math.abs(minDist) == Math.abs(pac_ghost_dist_i) || minDist < 0){//i is the minima dist
-			// if(pac_ghost_dist_i <0 && ghost_pos_arr[k].i <rows-1 && board[ghost_pos_arr[k].i][ghost_pos_arr[k].j] != 4 && noGhost(ghost_pos_arr[k].i,ghost_pos_arr[k].j)){//move up
-			var next_up = ghost_pos_arr[k].i + 1;
-			var next_down = ghost_pos_arr[k].i - 1;
+	for(var k=0 ; k<ghost_pos_arr.length; k++){
+		up=1000;
+		down=1000;
+		left=1000;
+		right=1000;
 
-			if(pac_ghost_dist_i < 0 && ghost_pos_arr[k].i <rows-1 && board[next_up][ghost_pos_arr[k].j] != 4 && noGhost(next_up, ghost_pos_arr[k].j)){	
-				ghost_pos_arr[k].i++;
-			}
-			else if(pac_ghost_dist_i >=0 && ghost_pos_arr[k].i >0 && board[next_down][ghost_pos_arr[k].j] != 4 && noGhost(next_down, ghost_pos_arr[k].j)){	
-			//move down
-				ghost_pos_arr[k].i--;
-			}
-		}
-		else if(Math.abs(minDist) == Math.abs(pac_ghost_dist_j) || minDist > 0){//check dist by j position
-			var next_right = ghost_pos_arr[k].j + 1;
-			var next_left = ghost_pos_arr[k].j - 1;
-			if(pac_ghost_dist_j <0 && ghost_pos_arr[k].j < cols-1 && board[ghost_pos_arr[k].i][next_right] != 4 && noGhost(ghost_pos_arr[k].i, next_right)){//move left
-				ghost_pos_arr[k].j++;	
-			}
-			else if(pac_ghost_dist_j <0 && ghost_pos_arr[k].j > 0 && board[ghost_pos_arr[k].i][next_left] != 4 && noGhost(ghost_pos_arr[k].i, next_left)){//move left
-			//move right
-				ghost_pos_arr[k].j--;	
-			}
-		}
-	}
+		up = Math.abs(ghost_pos_arr[k].i - shape.i) + Math.abs((ghost_pos_arr[k].j - 1) - shape.j);
+		down = Math.abs( ghost_pos_arr[k].i - shape.i) + Math.abs((ghost_pos_arr[k].j + 1) - shape.j);	
+		left = Math.abs((ghost_pos_arr[k].i-1) - shape.i) + Math.abs(ghost_pos_arr[k].j - shape.j);
+		right = Math.abs((ghost_pos_arr[k].i+1) - shape.i) + Math.abs(ghost_pos_arr[k].j - shape.j);
+		var minDist= Math.min(right,down,left,up);
 		
+		if(minDist == up)
+			if(ghost_pos_arr[k].j > 0 && board[ghost_pos_arr[k].i][ghost_pos_arr[k].j-1] != 4 && noGhost(ghost_pos_arr[k].i,ghost_pos_arr[k].j-1))
+			ghost_pos_arr[k].j--;
+			
+		if(minDist == down)
+			if(ghost_pos_arr[k].j < rows - 1 && board[ghost_pos_arr[k].i][ghost_pos_arr[k].j+1] != 4 && noGhost(ghost_pos_arr[k].i,ghost_pos_arr[k].j+1))
+				ghost_pos_arr[k].j++;
+
+		if(minDist == left)
+			if(ghost_pos_arr[k].i > 0 && board[ghost_pos_arr[k].i-1][ghost_pos_arr[k].j] != 4 && noGhost(ghost_pos_arr[k].i-1,ghost_pos_arr[k].j))
+				ghost_pos_arr[k].i--;
+
+		if(minDist == right)
+			if(ghost_pos_arr[k].i < cols - 1  && board[ghost_pos_arr[k].i+1][ghost_pos_arr[k].j] != 4 && noGhost(ghost_pos_arr[k].i+1,ghost_pos_arr[k].j))
+			ghost_pos_arr[k].i++;
+
+		
+		}		
 	}
-
-
 
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 20 + 1);
@@ -478,6 +487,7 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblLive.value = live_left;
 	activeuser.value = active_user;
 	for (var i = 0; i < rows; i++) {
 		for (var j = 0; j < cols; j++) {
@@ -549,20 +559,27 @@ function Draw() {
 			} else if (board[i][j] == 4) { // wall
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "black"; //color
+				context.fillStyle = "blue"; //color
 				context.fill();
 			}
 			else if(board[i][j] == 12){ //clock
 				context.beginPath();
 				var clock_image = new Image();
 				clock_image.src = "images/clock.png";
-				context.drawImage(clock_image,center.x-5 , center.y-5 , 50,50)		
+				context.drawImage(clock_image,center.x-20 , center.y-20 , 50,50)		
 			}
 			else if(board[i][j] == 13){ //Heart
 				context.beginPath();
 				var Heart_image = new Image();
 				Heart_image.src = "heart.png";
-				context.drawImage(Heart_image,center.x-5 , center.y-5 , 50,50)		
+				context.drawImage(Heart_image,center.x-20 , center.y-20 , 50,50)		
+			}
+			else if(board[i][j] == 50){ //Bonus
+				context.beginPath();
+				var Bonus_image = new Image();
+				Bonus_image.src = "images/bonus1.png";
+				context.drawImage(Bonus_image,center.x-20 , center.y-20 , 50,50)	
+					
 			}
 		
 			draw_ghost(context,30,30);
@@ -575,8 +592,8 @@ function Draw() {
 
 function draw_ghost(ctx,height,width){
     for (var k=0; k<ghost_pos_arr.length; k++) {
-      y = ghost_pos_arr[k].i * 2* 30 + 30;
-      x = ghost_pos_arr[k].j* 2 * 30 + 30;
+      x = ghost_pos_arr[k].i * 2* 30 + 30;
+      y = ghost_pos_arr[k].j* 2 * 30 + 30;
       ctx.beginPath();
       ctx.fillStyle = "blue" ;
       ctx.arc(x , y, width, Math.PI, 2* Math.PI);
@@ -590,6 +607,13 @@ function draw_ghost(ctx,height,width){
     }
   }
 
+  function closeAllInterval(){
+	window.clearInterval(ghost_interval);
+	window.clearInterval(interval);
+	window.clearInterval(clock_interval);
+	window.clearInterval(bonus_interval);
+	window.clearInterval(heart_interval);
+  }
 
   function UpdatePosition() {
     board[shape.i][shape.j] = 0;
@@ -619,7 +643,6 @@ function draw_ghost(ctx,height,width){
       }
     }
 
-
     if (board[shape.i][shape.j] == 5) {
       score+=5;
       balls_left--;
@@ -632,19 +655,51 @@ function draw_ghost(ctx,height,width){
       score+=25;
       balls_left--;
     }
-	else if(board[shape.i][shape.j] == 12){
-		time_left += 10;
+	else if(board[shape.i][shape.j] == 12){ //clock
+		time_left -= 10;
 		clock_game.exist = false;
 
 	}
-	else if(board[shape.i][shape.j] == 13){
+	else if(board[shape.i][shape.j] == 13){ //heart
 		live_left += 1;
 		heart_game.exist = false;
+	}
+	else if(board[shape.i][shape.j] == 50){ //bonus
+		score += 50;
+	}
+	for (var k=0; k<ghosts_num; k++) {
+		if(shape.i == ghost_pos_arr[k].i && shape.j == ghost_pos_arr[k].j){
+			live_left--;
+			score -= 10;
+			if(live_left > 1){
+				putGhostOnCorners();
+				var emptyCell = findRandomEmptyCell(board);
+				shape.i = emptyCell[0];
+				shape.j = emptyCell[1];
+			}
+			else{
+				alert("Loser!");
+				closeAllInterval();
+
+			}
+		}	
+	}
+	// time_elapsed = time_left;
+	if(parseInt(time_elapsed) == time_left){
+		if(score < 100){
+			alert("You are better then " + score + " point!");
+			closeAllInterval();
+		}
+		else{
+			alert("Winner!")
+			closeAllInterval();
+		}
 	}
     
 	board[shape.i][shape.j] = 2;
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
+
     // if (score >= 20 && time_elapsed <= 10) {
     // 	pac_color = "green";
     // }

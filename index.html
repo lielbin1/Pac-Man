@@ -98,19 +98,19 @@
 					<input type="color" id="ball_15_color" name="ball_15_color" value="#FF69B4"style="width: 7%;">
 					<input type="color" id="ball_25_color" name="ball_25_color" value="#00008B" style="width: 7%;">
 				  </p>
-				 <div><br>
+				 <!-- <div><br>
 					<label ><u>Enter game buttons:</u></label><br/>
 					<input id="upKeyInp"   type="text"  autocomplete="off" name="up" required="true" placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;">
 					<input id="downKeyInp" type="text" autocomplete="off" name="down" required="true" placeholder="&#8595;"  style="text-align: center;width: 7%; font-size: 3mm;">
 					<input id="LeftKeyInp"  type="text" autocomplete="off" name="left" required="true" placeholder="&#8592;" style="text-align: center;width: 7%; font-size: 3mm;" >
 					<input id="rightKeyInp"  type="text" autocomplete="off" name="right" required="true" placeholder="&#8594;"  style="text-align: center;width: 7%; font-size: 3mm;">
-				 </div>
+				 </div> -->
 	
 				  <br>
 				  <br>
 				  <p>
-					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2" onclick="toggleDiv('game')" >
-					<button id="randomGameButton" name="random"  class="formButton formButton2">random</button>
+					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2" onclick="updateSetting()" >
+					<input id="randomGameButton" name="random" type="button" value="random" class="formButton formButton2" onclick="random_setting()" >
 				  </p>
 				</div>
 			</form>		
@@ -118,14 +118,16 @@
 			
 		</section>
 	<!-- ------------------need to change style="display:none; -->
-		<div id="game" style="display:block;" > 
+		<div id="game" style="display:none;" > 
 			<label for="activeuser">USER NAME:</label>
 			<input id="activeuser" type="text" />
 			<label for="lblScore">SCORE:</label>
 			<input id="lblScore" type="text" />
 			<label for="lblTime">TIME:</label>
 			<input id="lblTime" type="text" />
-			<canvas id="canvas" height="1300" width="1300"></canvas>
+			<label for="lblLive">LIVE:</label>
+			<input id="lblLive" type="text" />
+			<canvas id="canvas" height="1260" width="1260"></canvas>
 		</div>
 	</body>
 </html>
