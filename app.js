@@ -14,7 +14,7 @@ var visibleId = "game"; // need to cange welcomeDiv
 //var jsonData = require('./users.json'); 
 var usersDict = {} 
 usersDict["k"] = "k";
-var num_of_ball = 70;//-------initiallll---------
+var num_of_ball = 70;
 var balls_left;
 
 var num_of_5ball;
@@ -25,8 +25,13 @@ var choosen_color5;
 var choosen_color15;
 var choosen_color25;
 
+var up_key ;
+var down_key;
+var right_key;
+var left_key;
+
 var corners_arr = [];
-var ghosts_num = 4; // defaultValue for ghosts num  -------initiallll---
+var ghosts_num = 4; 
 var ghost_pos_arr = new Array();
 
 var direction_pac = "R"; // defaultValue for packman dir 
@@ -34,8 +39,8 @@ var direction_pac = "R"; // defaultValue for packman dir
 var active_user;
 
 var clock_game; // object on board is 12
-var time_left = 60; //need to get from the user - initiallll
-var live_left = 5; //initiallll----------
+var time_left = 60; 
+var live_left = 5; 
 var heart_game;
 var bonus_game;
 
@@ -83,7 +88,34 @@ function Login()
 
 
 //--------------------Setting form--------------------- 
+
+window.addEventListener("keydown", function(e) {
+	if(e.target.id === "upKeyInp"){
+	   up_key = e.code; 
+	   e.target.value = up_key;
+	}
+	if(e.target.id === "downKeyInp"){
+	   down_key = e.code;
+	   e.target.value = down_key;
+	}
+	if(e.target.id === "rightKeyInp"){
+		right_key = e.code;
+	   e.target.value = right_key;
+	}
+	if(e.target.id === "LeftKeyInp"){
+	   left_key = e.code;
+	   e.target.value = left_key;
+	}
+
+	} , true) ;
+
+
 function updateSetting(){
+	// up =$("upKeyInp").value = "ArrowUp";
+	// down=$("#downKeyInp").value = "ArrowDown";
+	// right =$("#rightKeyInp").value = "ArrowRight";
+	// left = $("#LeftKeyInp").value = "ArrowLeft";
+
 	num_of_ball = document.getElementById('ballsNum').value;
 	
 	num_of_5ball = Math.floor(0.6 * num_of_ball);
@@ -96,12 +128,23 @@ function updateSetting(){
 
 	time_left = document.getElementById('gameTime').value;
 	ghosts_num = document.getElementById('ghostsNum').value;
+
+
 	toggleDiv('game')
 	Start();
 
 }
 
 function random_setting(){
+	// up = "ArrowUp";
+	// down = "ArrowDown";
+	// right = "ArrowRight";
+	// left = "ArrowLeft";
+	up_key =$("upKeyInp").value = "ArrowUp";
+	down_key=$("#downKeyInp").value = "ArrowDown";
+	right_key =$("#rightKeyInp").value = "ArrowRight";
+	left_key = $("#LeftKeyInp").value = "ArrowLeft";
+
 	num_of_ball = generateRandom(50,90);
 	num_of_5ball = Math.floor(0.6 * num_of_ball);
 	num_of_15ball = Math.floor(0.3 * num_of_ball);
@@ -113,6 +156,7 @@ function random_setting(){
 
 	time_left = generateRandom(60,90);
 	ghosts_num = generateRandom(1,4);
+
 	toggleDiv('game')
 	//keyboard
 	Start();
@@ -337,14 +381,14 @@ function Start() {
 	addEventListener(
 		"keydown",
 		function(e) {
-			keysDown[e.keyCode] = true;
+			keysDown[e.code] = true;
 		},
 		false
 	);
 	addEventListener(
 		"keyup",
 		function(e) {
-			keysDown[e.keyCode] = false;
+			keysDown[e.code] = false;
 		},
 		false
 	);
@@ -359,7 +403,6 @@ function Start() {
 
 
 // ---------------------------------add clock to the board----------------------------------
-
 
 
 function updateClock(){ 
@@ -466,21 +509,22 @@ function findRandomEmptyCell(board) {
 	return [i, j];
 }
 
-
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (keysDown[up_key]) { 
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[down_key]) {
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (keysDown[left_key]) {
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (keysDown[right_key]) {
+
 		return 4;
 	}
 }
+
 // ////////////////Draw//////////////////////////
 
 function Draw() {

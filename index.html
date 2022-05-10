@@ -90,27 +90,26 @@
 					<label for="ghostsNum"><u>Enter number of monsters:</u></label><br/>
 					<input  id="ghostsNum" value=1 type="number" name="ghostsNum" min="1" max="4" required="true">
 				  </p>
-	
 				  <p><br>
 					<label ><u>Enter balls color:</u></label><br/>
-					<label for="monstersNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
+					<label for="pointNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
 					<input type="color" id="ball_5_color" name="ball_5_color" value="#00CED1" style="width: 7%;" >
 					<input type="color" id="ball_15_color" name="ball_15_color" value="#FF69B4"style="width: 7%;">
 					<input type="color" id="ball_25_color" name="ball_25_color" value="#00008B" style="width: 7%;">
 				  </p>
-				 <!-- <div><br>
-					<label ><u>Enter game buttons:</u></label><br/>
-					<input id="upKeyInp"   type="text"  autocomplete="off" name="up" required="true" placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;">
-					<input id="downKeyInp" type="text" autocomplete="off" name="down" required="true" placeholder="&#8595;"  style="text-align: center;width: 7%; font-size: 3mm;">
-					<input id="LeftKeyInp"  type="text" autocomplete="off" name="left" required="true" placeholder="&#8592;" style="text-align: center;width: 7%; font-size: 3mm;" >
-					<input id="rightKeyInp"  type="text" autocomplete="off" name="right" required="true" placeholder="&#8594;"  style="text-align: center;width: 7%; font-size: 3mm;">
-				 </div> -->
-	
+				  <div class="w3-container w3-padding-16">
+					<div><br>
+						<label ><u>Enter game buttons:</u></label><br/>
+						<input id="upKeyInp"   type="text"  autocomplete="off" name="up_key" required="true" placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;">
+						<input id="downKeyInp" type="text" autocomplete="off" name="down_key" required="true" placeholder="&#8595;"  style="text-align: center;width: 7%; font-size: 3mm;">
+						<input id="LeftKeyInp"  type="text" autocomplete="off" name="left_key" required="true" placeholder="&#8592;" style="text-align: center;width: 7%; font-size: 3mm;" >
+						<input id="rightKeyInp"  type="text" autocomplete="off" name="right_key" required="true" placeholder="&#8594;"  style="text-align: center;width: 7%; font-size: 3mm;">
+					</div>
 				  <br>
 				  <br>
 				  <p>
-					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2" onclick="updateSetting()" >
-					<input id="randomGameButton" name="random" type="button" value="random" class="formButton formButton2" onclick="random_setting()" >
+					<input class="game_button" type="button" value="Start Game" id="setting_Game" onclick='updateSetting()'>
+					<input class="game_button" type="button" value="Random" id="setting_Random" onclick='random_setting()'>
 				  </p>
 				</div>
 			</form>		
