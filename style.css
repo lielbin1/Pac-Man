@@ -2,6 +2,13 @@
 #canvas{
    border: 1px solid black;
    background: #060606;
+   width : 1000px;
+   height : 1000px;
+   height: 80%;
+   width: 80%;
+   margin-top: 2%;
+   margin-left: 10%;
+   margin-right: 50%;
 	  /* background: -moz-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
 	  background: -webkit-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
 	  background: linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%); */

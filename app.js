@@ -525,14 +525,28 @@ function GetKeyPressed() {
 	}
 }
 
+
+function setlabel(){
+	lblScore.value = score;
+	lblTime.value = time_elapsed;
+	lblLive.value = live_left;
+	lblUser.value = active_user;
+	lblUpKey.value = up_key;
+	lblDownKey.value = down_key;
+	lblRightKey.value = right_key;
+	lblLeftKey.value = left_key;
+	lblGhosts.value = ghosts_num;
+	lbl5ballColor.style["background-color"] = choosen_color5;
+	lbl15ballColor.style["background-color"] = choosen_color15;
+	lbl25ballColor.style["background-color"] = choosen_color25;
+
+}
+
 // ////////////////Draw//////////////////////////
 
 function Draw() {
 	canvas.width = canvas.width; //clean board
-	lblScore.value = score;
-	lblTime.value = time_elapsed;
-	lblLive.value = live_left;
-	activeuser.value = active_user;
+	setlabel();
 	for (var i = 0; i < rows; i++) {
 		for (var j = 0; j < cols; j++) {
 			var center = new Object();

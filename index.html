@@ -116,17 +116,113 @@
 			</div>
 			
 		</section>
+
+	<!---------------game ------------------- -->
+ <!-- ------------------- Game -------------------->
+
 	<!-- ------------------need to change style="display:none; -->
-		<div id="game" style="display:none;" > 
-			<label for="activeuser">USER NAME:</label>
-			<input id="activeuser" type="text" />
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
-			<label for="lblLive">LIVE:</label>
-			<input id="lblLive" type="text" />
-			<canvas id="canvas" height="1260" width="1260"></canvas>
-		</div>
+		<section id="game" style="display:none;" > 
+			<table >
+				<tr>
+
+			<td id="lbl">
+				<labla for="lblUser">USER NAME:</labla>
+				<input id="lblUser" type="text" readonly=true />
+				<label for="lblScore">SCORE:</label>
+				<input id="lblScore" type="text" />
+				<label for="lblTime">TIME:</label>
+				<input id="lblTime" type="text" />
+				<label for="lblLive">LIVE:</label>
+				<input id="lblLive" type="text" />
+			</td>
+
+
+			<td id="centercanvas">
+				<canvas id="canvas" height="1260" width="1260"></canvas>
+			</td>
+			<!-- <canvas id="canvas" height="1260" width="1260"></canvas> -->
+			
+			<td>
+				<table>
+				  <tr>
+					  <td>
+						  <!-- <div id="music">
+							  <img id="playMusic" onclick="playAudio()" src="images/play.png" class="playMusicClass" width = "30px" height= "30px">
+							  <img  id="stopMusic" onclick="stopAudio()" src="images/stop.png"class="stopMusicClass" width = "30px" height="30px" >
+							  <br>
+							  <br>
+						  </div> -->
+					  </td><br>
+				  </tr>
+					  <tr>
+						<td>
+						  <div for="lblUpKey">
+							  <labla for="lblUpKey" ><b>Up key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblUpKey" type="text" value="">
+						  </div> 
+						</td>
+					  </tr>
+					   <tr>
+					  <td>
+						  <div for="lblDownKey">
+							  <labla for="lblDownKey"><b>Down key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblDownKey" type="text" value="">
+						  </div>
+					  </td>
+					   </tr>
+					   <tr>
+					   <td>
+						  <div for="lblRightKey">
+							  <labla for="lblRightKey"><b>Right key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblRightKey" type="text" value="">
+						  </div>
+					   </td>
+					   </tr>
+					  <tr>
+						<td>
+						  <div for="lblLeftKey">
+							  <labla for="lblLeftKey"><b>Left key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblLeftKey" type="text" value="" >
+						  </div>
+						</td>
+					  </tr>
+					   <tr>
+					  <td>
+						  <div for="lblGhosts">
+							  <labla for="lblGhosts"><b>Ghosts amount:</b></labla><br>	
+							  <input class="inputGame" id = "lblGhosts" type="text" value="">
+						  </div> 
+					  </td>
+					   </tr>
+					   <tr>
+					   <td>
+						  <div for="lbl5ballColor">
+							  <labla for="lbl5ballColor"><b>Color of 5 points :</b></labla>	
+							  <input class="inputGame" id = "lbl5ballColor" value="">
+						  </div>
+					  </td>
+					   </tr>
+					   <tr>
+					   <td>
+						  <div for="lbl15ballColor">
+							  <labla for="lbl15ballColor"><b>Color of 15 points:</b></labla>	
+							  <input class="inputGame" id = "lbl15ballColor" value="">
+						  </div>
+					   </td>
+					   </tr>
+					   <tr>
+					   <td>
+						   <div for="lbl25ballColor">
+						  <labla for="lbl25ballColor"><b>Color of 25 points:</b></labla>	
+						  <input class="inputGame" id = "lbl25ballColor" value="">
+						  </div>
+					   </td><br>
+					   </tr>
+					   
+				</table>
+		</td>
+				</tr>
+			</table>
+		</section>
 	</body>
 </html>
