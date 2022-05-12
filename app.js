@@ -334,7 +334,7 @@ function Start() {
 	clock_interval = setInterval(updateClock ,4000);
 	heart_interval = setInterval(updateHeart ,5000);
   	putGhostOnCorners();
-  	ghost_interval = setInterval(UpdateGhosts, 250);
+  	ghost_interval = setInterval(UpdateGhosts, 120);
 }
 
 
@@ -413,32 +413,34 @@ function UpdateGhosts(){
 		// distright=rows*cols;
 		// distup=rows*cols;
 		// distdown=rows*cols;
-		// random_position = Math.random() * 2 ; // Returns a random integer from 0 to 1
-		pac_ghost_dist_i = ghost_pos_arr[k].i - shape.i; 
-		pac_ghost_dist_j = ghost_pos_arr[k].j - shape.j; 
-		var minDist= Math.min(pac_ghost_dist_i,pac_ghost_dist_j);
-		if(Math.abs(minDist) == Math.abs(pac_ghost_dist_i) || minDist < 0){//i is the minima dist
+		random_position = Math.random() * 2 ; // Returns a random integer from 0 to 1
+		pac_ghost_dist_i = ghost_pos_arr[k].i  - shape.i; 
+		pac_ghost_dist_j = ghost_pos_arr[k].j  - shape.j; 
+		
+		var minDist= Math.min(Math.abs(pac_ghost_dist_i),Math.abs(pac_ghost_dist_j));
+		if(minDist == Math.abs(pac_ghost_dist_i)){//i is the minima dist
 			// if(pac_ghost_dist_i <0 && ghost_pos_arr[k].i <rows-1 && board[ghost_pos_arr[k].i][ghost_pos_arr[k].j] != 4 && noGhost(ghost_pos_arr[k].i,ghost_pos_arr[k].j)){//move up
 			var next_up = ghost_pos_arr[k].i + 1;
 			var next_down = ghost_pos_arr[k].i - 1;
-
-			if(pac_ghost_dist_i < 0 && ghost_pos_arr[k].i <rows-1 && board[next_up][ghost_pos_arr[k].j] != 4 && noGhost(next_up, ghost_pos_arr[k].j)){	
+			if((pac_ghost_dist_i < 0  )&& ghost_pos_arr[k].i <rows-1 && board[next_up][ghost_pos_arr[k].j] != 4 && noGhost(next_up, ghost_pos_arr[k].j)){	
+			//move up
 				ghost_pos_arr[k].i++;
 			}
-			else if(pac_ghost_dist_i >=0 && ghost_pos_arr[k].i >0 && board[next_down][ghost_pos_arr[k].j] != 4 && noGhost(next_down, ghost_pos_arr[k].j)){	
+			else if((pac_ghost_dist_i >=0) && ghost_pos_arr[k].i >0 && board[next_down][ghost_pos_arr[k].j] != 4 && noGhost(next_down, ghost_pos_arr[k].j)){	
 			//move down
 				ghost_pos_arr[k].i--;
 			}
 		}
-		else if(Math.abs(minDist) == Math.abs(pac_ghost_dist_j) || minDist > 0){//check dist by j position
+		if(minDist == Math.abs(pac_ghost_dist_j)){//check dist by j position
 			var next_right = ghost_pos_arr[k].j + 1;
 			var next_left = ghost_pos_arr[k].j - 1;
-			if(pac_ghost_dist_j <0 && ghost_pos_arr[k].j < cols-1 && board[ghost_pos_arr[k].i][next_right] != 4 && noGhost(ghost_pos_arr[k].i, next_right)){//move left
-				ghost_pos_arr[k].j++;	
-			}
-			else if(pac_ghost_dist_j <0 && ghost_pos_arr[k].j > 0 && board[ghost_pos_arr[k].i][next_left] != 4 && noGhost(ghost_pos_arr[k].i, next_left)){//move left
-			//move right
+			if((pac_ghost_dist_j < 0 ) && ghost_pos_arr[k].j < cols-1 && board[ghost_pos_arr[k].i][next_right] != 4 && noGhost(ghost_pos_arr[k].i, next_right)){
+			//move left
 				ghost_pos_arr[k].j--;	
+			}
+			else if((pac_ghost_dist_j >= 0) && ghost_pos_arr[k].j > 0 && board[ghost_pos_arr[k].i][next_left] != 4 && noGhost(ghost_pos_arr[k].i, next_left)){
+			//move right
+				ghost_pos_arr[k].j++;	
 			}
 		}
 	}
@@ -575,8 +577,8 @@ function Draw() {
 
 function draw_ghost(ctx,height,width){
     for (var k=0; k<ghost_pos_arr.length; k++) {
-      y = ghost_pos_arr[k].i * 2* 30 + 30;
-      x = ghost_pos_arr[k].j* 2 * 30 + 30;
+      x = ghost_pos_arr[k].i * 2* 30 + 30;
+      y = ghost_pos_arr[k].j* 2 * 30 + 30;
       ctx.beginPath();
       ctx.fillStyle = "blue" ;
       ctx.arc(x , y, width, Math.PI, 2* Math.PI);
