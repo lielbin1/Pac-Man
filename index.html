@@ -5,127 +5,319 @@
 		<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
+		<!-- for the footer links -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 
-	<body>
-		<!-- Top Navigation Bar -->
-		<div class="topnav" id="menu">
-			<a class="menuItem" href="#Welcome" onclick="toggleDiv('welcomeDiv')">Welcome</a>
-			<a class="menuItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
-			<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
-			<a class="menuItem"  href="#About" onclick="About()">About</a>
-		</div>
-		<!-- Welcome Div -->
-		<div class="welcome" id="welcomeDiv" style="display:block;">
-			<a class="welcomeItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
-			<a class="welcomeItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
-		</div>
+	<body style="background:black;">
+<!--------------------------------------------- Heade LOGO --------------------------------------------->
+<div class="logoDiv">
+	<!-- <img id= "headerImg" src="images\headerLogo.png" > 	 -->
+</div>
 
-		<!-- Registration Form -->
+<!--------------------------------------------- Top Navigation Bar --------------------------------------------->
 
-		  <form id="signupForm"  name="registration" style="display:none;">
-			<div class="container">
-			  <h1>Signup</h1>
-			  <p>Please fill in this form to create an account.</p>
-			  <hr>
-			  
-			  <label for="username"><b>User Name</b></label>
-			  <input type="text" placeholder="Enter User Name" name="username" id="username" >
-			  
-			  <label for="password"><b>Password</b></label>
-			  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" id="password" >
+<center>
 
-			  <label for="fullName"><b>Full Name</b></label>
-			  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName">
-
-			  <label for="email"><b>Email</b></label>
-			  <input type="text" placeholder="Enter Email" name="email" id="email">
-		  
-			  <label for="birthDate"><b>Birth Date</b></label>
-			  <input type="date" id="birthDate" name="birthDate"
-					value="yyyy-MM-dd"
-					min="1800-01-01" max="2025-12-31">
-			  <hr>
-			  <button type="submit" class="registerbtn">Signup</button>
-			  <button type="button" class="cancel" onclick="toggleDiv('welcomeDiv')">Cancel</button>
-
+	<div class="topnav" id="menu">
+		<img id= "topLogoImg" src="images/pacLogo.jpg" > 
+		<img id= "headerImg" src="images/headerLogo.png" > 
+		<a class="menuItem" href="#Welcome" onclick="toggleDiv('welcomeDiv')">Welcome</a>
+		<a class="menuItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
+		<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
+		<a class="menuItem"  href="#About" onclick="About()">About</a>
+	</div>
+</center>	
+	
+<!---------------------------------------------- Welcome Div --------------------------------------------------->
+		<center>
+			<div class="welcome" id="welcomeDiv" style="display:block;">
+				<br/>
+				<br/>
+				<br/>
+				<img id= "logoImg" src="images/LOGO.jpg" > 
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<button class="welcomeItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</button>
+				<button class="welcomeItem" href="#Login" onclick="toggleDiv('loginForm')">Login</button>
 			</div>
-		  </form>
+		</center>
+		
+
+<!------------------------------------------- Registration Form --------------------------------------------------->
+<center>
+	<form id="signupForm"  name="registration" style="display:none;">
+		<div class="container">
+		  <h1>Signup</h1>
+		  <p>Please fill in this form to create an account.</p>
+		  <hr>
+		  
+		  <label for="username"><b>User Name</b></label>
 		  <br/>
+		  <input type="text" placeholder="Enter User Name" name="username" id="username" >
 		  <br/>
+		  
+		  <label for="password"><b>Password</b></label>
 		  <br/>
-		<!-- Login Form -->
+
+		  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" id="password" >
+		  <br/>
+
+		  <label for="fullName"><b>Full Name</b></label>
+		  <br/>
+
+		  <input type="text" placeholder="Enter Full Name" name="fullName" id="fullName">
+		  <br/>
+
+		  <label for="email"><b>Email</b></label>
+		  <br/>
+
+		  <input type="text" placeholder="Enter Email" name="email" id="email">
+		  <br/>
+	  
+		  <label for="birthDate"><b>Birth Date</b></label>
+		  <br/>
+
+		  <input type="date" id="birthDate" name="birthDate"
+				value="yyyy-MM-dd"
+				min="1800-01-01" max="2025-12-31" style="color:white">
+		  <hr>
+		  <button type="submit" class="registerbtn">Signup</button>
+		  <button type="button" class="cancel" onclick="toggleDiv('welcomeDiv')">Cancel</button>
+
+		</div>
+	  </form>
+	  <br/>
+	  <br/>
+	  <br/>
+</center>
+		 
+<!---------------------------------------------- Login Form --------------------------------------------------->
+	<center>
 		<div>
 			<form id="loginForm"  style="display:none;">
 				<div class="container">
 				  <label for="userName"><b>Username</b></label>
+				  <br/>
 				  <input type="text" placeholder="Enter Username" name="userName" id="userName" required="required" autocomplete="off">
+				 <br/> 
 				  <label for="Password"><b>Password</b></label>
+				  <br/>
 				  <input type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" name="Password" id="Password" required="required" autocomplete="off">
+				 <br/> 
 				  <button type="button" onclick="Login()">Login</button>
-				</div>
-				<div class="container" style="background-color:#f1f1f1">
 				  <button type="button" class="cancelbtn" onclick="toggleDiv('welcomeDiv')">Cancel</button>
 				</div>
 			  </form>
+			  <br/>
+			  <br/>
+			  <br/>
 		</div>
-		<!-- settings section -->
-		
-		<section  id="gameSettingsSection" style="display:none;">
-			<div id="Settings" >
-			<form id="settingsForm">
-				<div class="container">
-				  <h1 style="color: azure;">Pre game settings</h1>
-				  <hr>
-				  <p>
-					<label for="ballsNum"><u>Enter number of balls:</u></label><br/>
-					<input  id="ballsNum" value=50 type="number" name="ballsNum" min= "50" max="90" required="required" >
-				  </p>
-				  <p><br>
-					<label for="gameTime"><u> Enter game duration:</u></label><br/>
-					<input  id="gameTime" value= 60 type="number" name="gameTime" min= "60" required="required">
-				  </p>   
-				  <p><br>
-					<label for="gsNum"><u>Enter number of monsters:</u></label><br/>
-					<input  id="ghostsNum" value=1 type="number" name="ghostsNum" min="1" max="4" required="true">
-				  </p>
+	</center>	
 	
-				  <p><br>
-					<label ><u>Enter balls color:</u></label><br/>
-					<label for="monstersNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
-					<input type="color" id="ball_5_color" name="ball_5_color" value="#00CED1" style="width: 7%;" >
-					<input type="color" id="ball_15_color" name="ball_15_color" value="#FF69B4"style="width: 7%;">
-					<input type="color" id="ball_25_color" name="ball_25_color" value="#00008B" style="width: 7%;">
-				  </p>
-				 <div><br>
-					<label ><u>Enter game buttons:</u></label><br/>
-					<input id="upKeyInp"   type="text"  autocomplete="off" name="up" required="true" placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;">
-					<input id="downKeyInp" type="text" autocomplete="off" name="down" required="true" placeholder="&#8595;"  style="text-align: center;width: 7%; font-size: 3mm;">
-					<input id="LeftKeyInp"  type="text" autocomplete="off" name="left" required="true" placeholder="&#8592;" style="text-align: center;width: 7%; font-size: 3mm;" >
-					<input id="rightKeyInp"  type="text" autocomplete="off" name="right" required="true" placeholder="&#8594;"  style="text-align: center;width: 7%; font-size: 3mm;">
-				 </div>
-	
-				  <br>
-				  <br>
-				  <p>
-					<input id="startGameButton" name="start" type="submit" value="send" class="formButton formButton2" onclick="toggleDiv('game')" >
-					<button id="randomGameButton" name="random"  class="formButton formButton2">random</button>
-				  </p>
+<!----------------------------------------------- settings section ------------------------------------------->
+		<center>
+			<section  id="gameSettingsSection" style="display:none;">
+				<div id="Settings" >
+				<form id="settingsForm">
+					<div class="container">
+					  <h1 style="color: azure;">Game Settings</h1>
+					  <hr>
+					  <p>
+						<label for="ballsNum">Enter number of balls:</label><br/>
+						<input  id="ballsNum"  type="number" name="ballsNum" min= "50" max="90" required >
+					  </p>
+					  <p><br>
+						<label for="gameTime"> Enter game duration:</label><br/>
+						<input  id="gameTime"  type="number" name="gameTime" min= "60" required>
+					  </p>   
+					  <p><br>
+						<label for="gsNum">Enter number of monsters:</label><br/>
+						<input  id="ghostsNum"  type="number" name="ghostsNum" min="1" max="4" required>
+					  </p>
+					  <p><br>
+						<label >Enter balls color:</label><br/>
+						<label for="pointNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
+						<input type="color" id="ball_5_color" name="ball_5_color" value="#00CED1" style="width: 7%;" required>
+						<input type="color" id="ball_15_color" name="ball_15_color" value="#FF69B4"style="width: 7%;" required>
+						<input type="color" id="ball_25_color" name="ball_25_color" value="#00008B" style="width: 7%;" required>
+					  </p>
+					  <div class="w3-container w3-padding-16">
+						<div><br>
+							<label >Enter game buttons:</label><br/>
+							<input id="upKeyInp"   type="text"  autocomplete="off" name="up_key"  placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;" required>
+							<input id="downKeyInp" type="text" autocomplete="off" name="down_key"  placeholder="&#8595;"  style="text-align: center;width: 7%; font-size: 3mm;" required>
+							<input id="LeftKeyInp"  type="text" autocomplete="off" name="left_key"  placeholder="&#8592;" style="text-align: center;width: 7%; font-size: 3mm;" required>
+							<input id="rightKeyInp"  type="text" autocomplete="off" name="right_key"  placeholder="&#8594;"  style="text-align: center;width: 7%; font-size: 3mm;" required>
+						</div>
+					  <br>
+					  <br>
+					  <p>
+						<button class="game_button" type="button" value="Start Game" id="setting_Game" onclick='updateSetting()'>Start Game</button>
+						<button class="game_button" type="button" value="Random" id="setting_Random" onclick='random_setting()'>Random</button>
+					  </p>
+					</div>
+				</form>		
 				</div>
-			</form>		
-			</div>
+			</section>
+		</center>
+		
+
+ <!-- -------------------------------------------- Game -------------------------------------------------------->
+
+		<section id="game" style="display:none;" > 
+			<table >
+				<tr>
+
+			<td id="lbl">
+				<labla for="lblUser">USER NAME:</labla>
+				<br/>
+				<input id="lblUser" type="text" readonly=true />
+				<br/>
+				<label for="lblScore">SCORE:</label>
+				<br/>
+				<input id="lblScore" type="text" />
+				<br/>
+				<label for="lblTime">TIME:</label>
+				<br/>
+				<input id="lblTime" type="text" />
+				<br/>
+				<label for="lblLive">LIVE:</label>
+				<br/>
+				<input id="lblLive" type="text" />
+			</td>
+
+
+			<td id="centercanvas">
+				<canvas id="canvas" height="1260" width="1260"></canvas>
+			</td>
+			<!-- <canvas id="canvas" height="1260" width="1260"></canvas> -->
 			
+			<td>
+				<table>
+				  <tr>
+					  <td>
+						  <!-- add music!!!!!!!!!!!!!!!!!! -->
+						  <!-- <div id="music">
+							  <img id="playMusic" onclick="playAudio()" src="images/play.png" class="playMusicClass" width = "30px" height= "30px">
+							  <img  id="stopMusic" onclick="stopAudio()" src="images/stop.png"class="stopMusicClass" width = "30px" height="30px" >
+							  <br>
+							  <br>
+						  </div> -->
+					  </td><br>
+				  </tr>
+					  <tr>
+						<td>
+						  <div for="lblUpKey">
+							  <labla for="lblUpKey" ><b>Up key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblUpKey" type="text" value="">
+						  </div> 
+						</td>
+					  </tr>
+					   <tr>
+					  <td>
+						  <div for="lblDownKey">
+							  <labla for="lblDownKey"><b>Down key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblDownKey" type="text" value="">
+						  </div>
+					  </td>
+					   </tr>
+					   <tr>
+					   <td>
+						  <div for="lblRightKey">
+							  <labla for="lblRightKey"><b>Right key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblRightKey" type="text" value="">
+						  </div>
+					   </td>
+					   </tr>
+					  <tr>
+						<td>
+						  <div for="lblLeftKey">
+							  <labla for="lblLeftKey"><b>Left key:</b></labla>	<br>
+							  <input class="inputGame" id = "lblLeftKey" type="text" value="" >
+						  </div>
+						</td>
+					  </tr>
+					   <tr>
+					  <td>
+						  <div for="lblGhosts">
+							  <labla for="lblGhosts"><b>Ghosts amount:</b></labla><br>	
+							  <input class="inputGame" id = "lblGhosts" type="text" value="">
+						  </div> 
+					  </td>
+					   </tr>
+					   <tr>
+					   <td>
+						  <div for="lbl5ballColor">
+							  <labla for="lbl5ballColor"><b>Color of 5 points :</b></labla>	
+							  <input class="inputGame" id = "lbl5ballColor" value="">
+						  </div>
+					  </td>
+					   </tr>
+					   <tr>
+					   <td>
+						  <div for="lbl15ballColor">
+							  <labla for="lbl15ballColor"><b>Color of 15 points:</b></labla>	
+							  <input class="inputGame" id = "lbl15ballColor" value="">
+						  </div>
+					   </td>
+					   </tr>
+					   <tr>
+					   <td>
+						   <div for="lbl25ballColor">
+						  <labla for="lbl25ballColor"><b>Color of 25 points:</b></labla>	
+						  <input class="inputGame" id = "lbl25ballColor" value="">
+						  </div>
+					   </td><br>
+					   </tr>
+					   
+				</table>
+		</td>
+				</tr>
+			</table>
 		</section>
-	<!-- ------------------need to change style="display:none; -->
-		<div id="game" style="display:block;" > 
-			<label for="activeuser">USER NAME:</label>
-			<input id="activeuser" type="text" />
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
-			<canvas id="canvas" height="1300" width="1300"></canvas>
-		</div>
+		<!-- -------------------------------Footer----------------------------------- -->
+		<center> 
+			<div class="footer-dark">
+				<footer>
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-6 col-md-3 item">
+								<h3>Services</h3>
+								<ul>
+									<p>In this Website you can enjoy playing the best pacman game you ever played.</p>
+								</ul>
+							</div>
+							<div class="col-sm-6 col-md-3 item">
+								<h3>About</h3>
+								<ul>
+									<p>We are Liel and Keren. Third Year Students for Software and Information Systems Engineering.</p>
+								</ul>
+							</div>
+							<div class="col-md-6 item text">
+								<h3>Pacman Game</h3>
+								<p>Pacman is an action maze chase video game. The player controls the eponymous character through an enclosed maze. The objective of the game is to eat all of the dots placed in the maze while avoiding the ghosts.</p>
+							</div>
+							<div class="col item social">
+								<a href="https://www.facebook.com/profile.php?id=100009173578440"><i class="icon ion-social-facebook"></i></a>
+								<a href="#"><i class="icon ion-social-twitter"></i></a>
+								<a href="#"><i class="icon ion-social-snapchat"></i></a>
+								<a href="#"><i class="icon ion-social-instagram"></i></a>
+							</div>
+						</div>
+						<p class="copyright">Pacman Game © 2022</p>
+					</div>
+				</footer>
+			</div>
+			<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script> -->
+		</center>
+	
 	</body>
 </html>

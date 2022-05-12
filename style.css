@@ -1,12 +1,230 @@
 
-/* ---------------------------Login Form------------------------------ */
-/* Bordered form */
-form {
-    border: 3px solid #f1f1f1;
+
+#canvas{
+   border: 1px solid black;
+   background: #060606;
+   width : 1000px;
+   height : 1000px;
+   height: 80%;
+   width: 80%;
+   margin-top: 2%;
+   margin-left: 10%;
+   margin-right: 50%;
+	  /* background: -moz-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
+	  background: -webkit-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
+	  background: linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%); */
+
+   }
+/* *******************************all forms, inputs style*********************************** */
+form{
+
+	/* width:600px; */
+	/* height:440px; */
+	background: #18aba9;
+	background: -moz-linear-gradient(top, #19CECA 0%, #000000 100%, #24FFEA 100%);
+	background: -webkit-linear-gradient(top, #19CECA 0%, #000000 100%, #24FFEA 100%);
+	background: linear-gradient(to bottom, #19CECA 0%, #000000 100%, #24FFEA 100%);
+	border-radius:20px;
+	box-shadow:0 0 40px -10px #000;
+	/* margin:calc(50vh - 220px) auto; */
+	/* margin-left: 32%; */
+	padding:20px 70px;
+	/* max-width: 600px; */
+	box-sizing:border-box;
+	font-family:'Montserrat',sans-serif;	
+  width: 50%;
+}
+	input{
+		width:130px;
+    height: 30px;
+		/* max-width:400px; */
+		/* padding:10px; */
+		box-sizing:border-box;
+		background:none;
+		outline:none;
+		resize:none;
+    border:0;
+		font-family:'Montserrat',sans-serif;
+		transition:all .3s;
+		border:2px solid #ffffff;
+		border-radius: 20px; 
+	}
+
+/* ***************************buttons style ************************** */
+
+/* CSS */
+button{
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  padding: 14px 20px;
+  margin: 8px 8px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+
+  text-decoration: none;
+	font-size: 100%;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+label,
+p{
+  float: center;
+	color: white;
+	text-align: center;
+	/* padding: 0.5em ; */
+	text-decoration: none;
+	font-size: 100%;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+
+}
+
+h1{
+  float: center;
+	color: white;
+	text-align: center;
+	/* padding: 0.5em ; */
+	text-decoration: none;
+	font-size: 26;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+/* **********************nav bar style******************************** */
+#menu
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	/* justify-content: space-between; */
+	align-items: center;
+	overflow: hidden;
+	/* position: fixed; */
+	width: 100%;
+	height: 100px;
+	top: 0;
+	/* background: #19CECA;
+	background: -moz-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
+	background: -webkit-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
+	background: linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%); */
+	}
+	.menuItem
+	{
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+
+#topnav{
+	display: flex;
+	flex-direction: row;
+	/* flex-wrap: wrap; */
+	justify-content: center;
+  }
+  /* Style the links inside the navigation bar */
+  .topnav a {
+	float: center;
+	color: white;
+	text-align: center;
+	/* padding: 0.5em ; */
+	text-decoration: none;
+	font-size: 100%;
+	font-family: "Comic Sans MS", cursive, sans-serif;
   }
   
+  /* Change the color of links on hover */
+  .topnav a:hover {
+	background-color:  #19CECA;
+	color: black;
+  }
+
+
+  /* Add a color to the active/current link */
+  .topnav a.active {
+	background-color: #04AA6D;
+	color: white;
+  }
+
+  #headerImg{
+    width: 300px;
+    height: 100px;
+
+  }
+
+  #topLogoImg{
+    width: 60px;
+    height: 60px;
+  }
+/* *************************welcome div style ******************************** */
+
+/* ---------------------------Login Form------------------------------ */
+/* Bordered form */
+/* form {
+    border: 3px solid #f4f2f2;
+  } */
+  
   /* Full-width inputs */
-  input[type=text], input[type=password] {
+  /* input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -14,30 +232,21 @@ form {
     border: 1px solid #ccc;
     box-sizing: border-box;
   }
-  
-  /* Set a style for all buttons */
-  button {
-    background-color: #04AA6D;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-  }
+   */
   
   /* Add a hover effect for buttons */
-  button:hover {
+  /* button:hover {
     opacity: 0.8;
   }
-  
+   */
   /* Extra style for the cancel button (red) */
-  .cancelbtn {
+  /* .cancelbtn {
     width: auto;
     padding: 10px 18px;
     background-color: #f44336;
-  }
+  } */
   
+ 
   /* Center the avatar image inside this container */
   .imgcontainer {
     text-align: center;
@@ -102,7 +311,7 @@ form {
   }
   
   /* Set a style for the submit/register button */
-  .registerbtn {
+  /* .registerbtn {
     background-color: #04AA6D;
     color: white;
     padding: 16px 20px;
@@ -111,7 +320,7 @@ form {
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
-  }
+  } */
   
   .registerbtn:hover {
     opacity:1;
@@ -128,13 +337,103 @@ form {
     text-align: center;
   }
   
-  label {
+  /* label {
     display: block;
     font: 1rem 'Fira Sans', sans-serif;
-}
+} */
 
 input,
 label {
     margin: .4rem 0;
 }
 
+/* ************************************Footer Style**************************************** */
+.footer-dark {
+  padding:50px 0;
+  color:#f0f9ff;
+  background-color:#000000;
+}
+
+.footer-dark h3 {
+  margin-top:0;
+  margin-bottom:12px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.footer-dark ul {
+  padding:0;
+  list-style:none;
+  line-height:1.6;
+  font-size:14px;
+  margin-bottom:0;
+}
+
+.footer-dark ul a {
+  color:inherit;
+  text-decoration:none;
+  opacity:0.6;
+}
+
+.footer-dark ul a:hover {
+  opacity:0.8;
+}
+
+@media (max-width:767px) {
+  .footer-dark .item:not(.social) {
+    text-align:center;
+    padding-bottom:20px;
+  }
+}
+
+.footer-dark .item.text {
+  margin-bottom:36px;
+}
+
+@media (max-width:767px) {
+  .footer-dark .item.text {
+    margin-bottom:0;
+  }
+}
+
+.footer-dark .item.text p {
+  opacity:0.6;
+  margin-bottom:0;
+}
+
+.footer-dark .item.social {
+  text-align:center;
+}
+
+@media (max-width:991px) {
+  .footer-dark .item.social {
+    text-align:center;
+    margin-top:20px;
+  }
+}
+
+.footer-dark .item.social > a {
+  font-size:20px;
+  width:36px;
+  height:36px;
+  line-height:36px;
+  display:inline-block;
+  text-align:center;
+  border-radius:50%;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.4);
+  margin:0 8px;
+  color:#fff;
+  opacity:0.75;
+}
+
+.footer-dark .item.social > a:hover {
+  opacity:0.9;
+}
+
+.footer-dark .copyright {
+  text-align:center;
+  padding-top:24px;
+  opacity:0.3;
+  font-size:13px;
+  margin-bottom:0;
+}
