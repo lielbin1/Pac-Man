@@ -44,6 +44,8 @@ var live_left = 5;
 var heart_game;
 var bonus_game;
 
+var _sound = document.getElementById("myAudio");
+
  
 
 var ghost_interval;
@@ -51,6 +53,16 @@ var ghost_interval;
 
 var ghost_pos_board;
 var ghost_obj_arr;
+
+var num_of_ball_;
+var num_of_5ball_;
+var num_of_15ball_;
+var num_of_25ball_;
+var choosen_color5_;
+var choosen_color15_;
+var choosen_color25_;
+var time_left_;
+var ghosts_num_;
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -92,6 +104,32 @@ function Login()
 
 //--------------------Setting form--------------------- 
 
+// function CheckForm()
+// {
+// if (document.settingsForm.upKeyInp.value == "")
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+// if (document.settingsForm.down_key.value == "")
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+// if (document.settingsForm.left_key.value == "")
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+// if (document.settingsForm.right_key.value == "")
+
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+
+//  }
+
 window.addEventListener("keydown", function(e) {
 	if(e.target.id === "upKeyInp"){
 	   up_key = e.code; 
@@ -114,10 +152,6 @@ window.addEventListener("keydown", function(e) {
 
 
 function updateSetting(){
-	// up =$("upKeyInp").value = "ArrowUp";
-	// down=$("#downKeyInp").value = "ArrowDown";
-	// right =$("#rightKeyInp").value = "ArrowRight";
-	// left = $("#LeftKeyInp").value = "ArrowLeft";
 
 	num_of_ball = document.getElementById('ballsNum').value;
 	
@@ -134,15 +168,42 @@ function updateSetting(){
 
 
 	toggleDiv('game')
+	saveSetting()
 	Start();
 
 }
 
+function saveSetting(){
+	num_of_ball_ = num_of_ball;
+	
+	num_of_5ball_ = num_of_5ball;
+	num_of_15ball_ = num_of_15ball;
+	num_of_25ball_= num_of_25ball;
+
+	choosen_color5_ = choosen_color5;
+	choosen_color15_ = choosen_color15;
+	choosen_color25_ = choosen_color25;
+
+	time_left_ = time_left;
+	ghosts_num_ = ghosts_num;
+	
+}
+ function restoreSetting(){
+	num_of_ball = num_of_ball_;
+	num_of_5ball = num_of_5ball_;
+	num_of_15ball = num_of_15ball_;
+	num_of_25ball = num_of_25ball_;
+
+	choosen_color5 = choosen_color5_;
+	choosen_color15 = choosen_color15_;
+	choosen_color25 = choosen_color25_;
+
+	time_left = time_left_;
+	ghosts_num = ghosts_num_;
+ }
+
+
 function random_setting(){
-	// up = "ArrowUp";
-	// down = "ArrowDown";
-	// right = "ArrowRight";
-	// left = "ArrowLeft";
 	up_key =$("upKeyInp").value = "ArrowUp";
 	down_key=$("#downKeyInp").value = "ArrowDown";
 	right_key =$("#rightKeyInp").value = "ArrowRight";
@@ -161,6 +222,7 @@ function random_setting(){
 	ghosts_num = generateRandom(1,4);
 
 	toggleDiv('game')
+	saveSetting()
 	//keyboard
 	Start();
 
@@ -262,6 +324,26 @@ $(function() {
 	});
 });
 
+//////New game from the game page //////////////
+function newGame(){
+	closeAllInterval();
+	restoreSetting();
+	Start();
+
+}
+
+
+function playAudio() {
+	$('img.playMusicClass').click(function () {
+		_sound.play();
+	});
+}
+
+function stopAudio() {
+	$('img.stopMusicClass').click(function () {
+		_sound.pause();
+	});
+}
 
 function Start() {
 	board = 
@@ -294,6 +376,9 @@ function Start() {
 	var cnt = 441;
 	balls_left = num_of_ball;
 	start_num_of_balls = num_of_ball;
+
+	// _sound.play();
+	// _sound.volume =0.2;
 	// objects clock and heart for the special functionality
 	heart_game = new Object();
 	clock_game = new Object();
@@ -398,7 +483,7 @@ function Start() {
 		false
 	);
 	
-	interval = setInterval(UpdatePosition, 120);
+	interval = setInterval(UpdatePosition, 100);
 	clock_interval = setInterval(updateClock ,4000);
 	heart_interval = setInterval(updateHeart ,5000);
   	putGhostOnCorners();
@@ -678,6 +763,26 @@ function Draw() {
 	}
 }
 
+// disable up and down arrow downscroll !! 
+var keys = {};
+window.addEventListener("keydown",
+    function(e){
+        keys[e.keyCode] = true;
+        switch(e.keyCode){
+            case 37: case 39: case 38:  case 40: // Arrow keys
+            case 32: e.preventDefault(); break; // Space
+            default: break; // do not block other keys
+        }
+    },
+false);
+window.addEventListener('keyup',
+    function(e){
+        keys[e.keyCode] = false;
+    },
+false);
+
+
+
 function draw_ghost(ctx,height,width){
     for (var k=0; k<ghost_pos_arr.length; k++) {
       x = ghost_pos_arr[k].i * 2* 30 + 30;
@@ -768,7 +873,7 @@ function draw_ghost(ctx,height,width){
 			else{
 				alert("Loser!");
 				closeAllInterval();
-				// updateSetting();//the num_of_ball is decring so the start over os not working
+				restoreSetting();
 				Start();
 			// TODO: have to start a new game here!
 			}

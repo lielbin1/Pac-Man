@@ -131,24 +131,24 @@
 					  <hr>
 					  <p>
 						<label for="ballsNum">Enter number of balls:</label><br/>
-						<input  id="ballsNum"  type="number" name="ballsNum" min= "50" max="90" required >
+						<input  id="ballsNum"  type="number" name="ballsNum" min= "50" max="90" required="required" >
 					  </p>
 					  <p><br>
 						<label for="gameTime"> Enter game duration:</label><br/>
-						<input  id="gameTime"  type="number" name="gameTime" min= "60" required>
+						<input  id="gameTime"  type="number" name="gameTime" min= "60" required="required">
 					  </p>   
 					  <p><br>
 						<label for="gsNum">Enter number of monsters:</label><br/>
-						<input  id="ghostsNum"  type="number" name="ghostsNum" min="1" max="4" required>
+						<input  id="ghostsNum"  type="number" name="ghostsNum" min="1" max="4" required="required">
 					  </p>
 					  <p><br>
 						<label >Enter balls color:</label><br/>
 						<label for="pointNum" style=" word-spacing: 25px;">5points  15points  25points</label><br/>
-						<input type="color" id="ball_5_color" name="ball_5_color" value="#00CED1" style="width: 7%;" required>
-						<input type="color" id="ball_15_color" name="ball_15_color" value="#FF69B4"style="width: 7%;" required>
-						<input type="color" id="ball_25_color" name="ball_25_color" value="#00008B" style="width: 7%;" required>
+						<input type="color" id="ball_5_color" name="ball_5_color" value="#0000cc" style="width: 7%;" required>
+						<input type="color" id="ball_15_color" name="ball_15_color" value="#0099cc"style="width: 7%;" required>
+						<input type="color" id="ball_25_color" name="ball_25_color" value="#cc0000" style="width: 7%;" required>
 					  </p>
-					  <div class="w3-container w3-padding-16">
+					  
 						<div><br>
 							<label >Enter game buttons:</label><br/>
 							<input id="upKeyInp"   type="text"  autocomplete="off" name="up_key"  placeholder="&#8593;" style="text-align: center;width: 7%; font-size: 3mm;" required>
@@ -159,10 +159,10 @@
 					  <br>
 					  <br>
 					  <p>
-						<button class="game_button" type="button" value="Start Game" id="setting_Game" onclick='updateSetting()'>Start Game</button>
+						<button class="game_button_start" type="submit" value="Start Game" id="setting_Game" onclick='updateSetting()'>Start Game</button>
 						<button class="game_button" type="button" value="Random" id="setting_Random" onclick='random_setting()'>Random</button>
 					  </p>
-					</div>
+					
 				</form>		
 				</div>
 			</section>
@@ -172,11 +172,14 @@
  <!-- -------------------------------------------- Game -------------------------------------------------------->
 
 		<section id="game" style="display:none;" > 
+			<!-- <audio id="myAudio">
+				<source src="music/GameSound.mp3" type="audio/mpeg">			
+			</audio> -->
 			<table >
 				<tr>
 
 			<td id="lbl">
-				<labla for="lblUser">USER NAME:</labla>
+				<label for="lblUser">USER NAME:</label>
 				<br/>
 				<input id="lblUser" type="text" readonly=true />
 				<br/>
@@ -191,7 +194,16 @@
 				<label for="lblLive">LIVE:</label>
 				<br/>
 				<input id="lblLive" type="text" />
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<button onclick="newGame()" class="button_Start">New Game</button><br>
+				
 			</td>
+
 
 
 			<td id="centercanvas">
@@ -203,8 +215,8 @@
 				<table>
 				  <tr>
 					  <td>
-						  <!-- add music!!!!!!!!!!!!!!!!!! -->
-						  <!-- <div id="music">
+<!-- 	
+						  <div id="music">
 							  <img id="playMusic" onclick="playAudio()" src="images/play.png" class="playMusicClass" width = "30px" height= "30px">
 							  <img  id="stopMusic" onclick="stopAudio()" src="images/stop.png"class="stopMusicClass" width = "30px" height="30px" >
 							  <br>
@@ -215,7 +227,7 @@
 					  <tr>
 						<td>
 						  <div for="lblUpKey">
-							  <labla for="lblUpKey" ><b>Up key:</b></labla>	<br>
+							  <label for="lblUpKey" ><b>Up key:</b></label>	<br>
 							  <input class="inputGame" id = "lblUpKey" type="text" value="">
 						  </div> 
 						</td>
@@ -223,7 +235,7 @@
 					   <tr>
 					  <td>
 						  <div for="lblDownKey">
-							  <labla for="lblDownKey"><b>Down key:</b></labla>	<br>
+							  <label for="lblDownKey"><b>Down key:</b></label>	<br>
 							  <input class="inputGame" id = "lblDownKey" type="text" value="">
 						  </div>
 					  </td>
@@ -231,7 +243,7 @@
 					   <tr>
 					   <td>
 						  <div for="lblRightKey">
-							  <labla for="lblRightKey"><b>Right key:</b></labla>	<br>
+							  <label for="lblRightKey"><b>Right key:</b></label>	<br>
 							  <input class="inputGame" id = "lblRightKey" type="text" value="">
 						  </div>
 					   </td>
@@ -239,7 +251,7 @@
 					  <tr>
 						<td>
 						  <div for="lblLeftKey">
-							  <labla for="lblLeftKey"><b>Left key:</b></labla>	<br>
+							  <label for="lblLeftKey"><b>Left key:</b></label>	<br>
 							  <input class="inputGame" id = "lblLeftKey" type="text" value="" >
 						  </div>
 						</td>
@@ -247,7 +259,7 @@
 					   <tr>
 					  <td>
 						  <div for="lblGhosts">
-							  <labla for="lblGhosts"><b>Ghosts amount:</b></labla><br>	
+							  <label for="lblGhosts"><b>Ghosts amount:</b></label><br>	
 							  <input class="inputGame" id = "lblGhosts" type="text" value="">
 						  </div> 
 					  </td>
@@ -255,7 +267,7 @@
 					   <tr>
 					   <td>
 						  <div for="lbl5ballColor">
-							  <labla for="lbl5ballColor"><b>Color of 5 points :</b></labla>	
+							  <label for="lbl5ballColor"><b>Color of 5 points :</b></label>	
 							  <input class="inputGame" id = "lbl5ballColor" value="">
 						  </div>
 					  </td>
@@ -263,7 +275,7 @@
 					   <tr>
 					   <td>
 						  <div for="lbl15ballColor">
-							  <labla for="lbl15ballColor"><b>Color of 15 points:</b></labla>	
+							  <label for="lbl15ballColor"><b>Color of 15 points:</b></label>	
 							  <input class="inputGame" id = "lbl15ballColor" value="">
 						  </div>
 					   </td>
@@ -271,7 +283,7 @@
 					   <tr>
 					   <td>
 						   <div for="lbl25ballColor">
-						  <labla for="lbl25ballColor"><b>Color of 25 points:</b></labla>	
+						  <label for="lbl25ballColor"><b>Color of 25 points:</b></label>	
 						  <input class="inputGame" id = "lbl25ballColor" value="">
 						  </div>
 					   </td><br>
@@ -304,6 +316,15 @@
 								<h3>Pacman Game</h3>
 								<p>Pacman is an action maze chase video game. The player controls the eponymous character through an enclosed maze. The objective of the game is to eat all of the dots placed in the maze while avoiding the ghosts.</p>
 							</div>
+							<div class="col-sm-6 col-md-3 item">
+								<h3>Contect us</h3>
+								<ul>
+									<p>lielbin@post.bgu.ac.il</p>
+									<p>diank@post.bgu.ac.il</p>
+								</ul>
+							</div>
+							<br/>
+							<br/>
 							<div class="col item social">
 								<a href="https://www.facebook.com/profile.php?id=100009173578440"><i class="icon ion-social-facebook"></i></a>
 								<a href="#"><i class="icon ion-social-twitter"></i></a>

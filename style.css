@@ -5,9 +5,9 @@
    background: #060606;
    width : 1000px;
    height : 1000px;
-   height: 80%;
+   height: 20%;
    width: 80%;
-   margin-top: 2%;
+   /* margin-top: 0%; */
    margin-left: 10%;
    margin-right: 50%;
 	  /* background: -moz-linear-gradient(45deg, #19CECA 0%, #000000 51%, #24FFEA 100%);
@@ -70,7 +70,7 @@ button{
   margin: 8px 8px;
   border: none;
   cursor: pointer;
-  width: 30%;
+  width: 60%;
 
   text-decoration: none;
 	font-size: 100%;
@@ -436,4 +436,58 @@ label {
   opacity:0.3;
   font-size:13px;
   margin-bottom:0;
+}
+
+
+#lbl5ballColor{
+  width: 10%;
+  border: 2px solid #ffffff;
+  color: white;
+  padding: 5px 5px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 6px 2px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+#lbl15ballColor{
+  width: 10%;
+  border: 2px solid #ffffff;
+  color: white;
+  padding: 5px 5px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 6px 2px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+#lbl25ballColor{
+  width: 10%;
+  border: 2px solid #ffffff;
+  color: white;
+  padding: 5px 5px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 6px 2px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+table {
+  /* border-collapse: collapse; */
+  border: none;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+th{
+  border: none;
+
+}
+td{
+  /* border: 2px solid rgb(255, 255, 255);
+  border-collapse: collapse; */
+  /* height: 70%; */
+  border: none;
 }
