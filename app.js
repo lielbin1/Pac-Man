@@ -63,6 +63,7 @@ var choosen_color15_;
 var choosen_color25_;
 var time_left_;
 var ghosts_num_;
+var ghost_pic = ["images/red_ghost.png","images/yellow_ghost.png","images/pink_ghost.png","images/blue_ghost.png"]
 
 $(document).ready(function() {
 	context = canvas.getContext("2d");
@@ -72,9 +73,8 @@ $(document).ready(function() {
 //-----------------------function to switch between 2 divs-----------------
 function toggleDiv(ToDivId)
 {
-	if(visibleId == "game" ){ 
+	if(visibleId == "game"){
 		closeAllInterval();
-		stopAudio();
 	}
 	document.getElementById(visibleId).style.display = 'none';
 	document.getElementById(ToDivId).style.display = 'block';
@@ -91,8 +91,6 @@ function Login()
 		// alert('Login successful');
 		active_user = username;
 		// need to open settign page ;
-		let form = $("#loginForm");
-		form[0].reset();
 		toggleDiv('gameSettingsSection')
 		return; 
 	}
@@ -105,64 +103,33 @@ function Login()
 }
 
 
+//--------------------Setting form--------------------- 
 
-// $(document).ready(function() {
-// 	$("#signupForm").validate({
-// 		rules: {
-// 			username: {
-// 				required: true,
-// 				usernameExists: true
-// 			},
-// 			password: {
-// 				required: true,
-// 				strongPassword: true
-// 			},
-// 			fullName: {
-// 				required: true,
-// 				lettersonly : true
-// 			},
-// 			email: {
-// 				required: true,
-// 				email: true
-// 			},
-// 			birthDate: {
-// 				required: true
-// 			}
-// 		},
-// 		messages: {
-// 			username: {
-// 				required: "Please enter valid username.",
-// 				usernameExists: "this username already exist, please enter another valid username."
-// 			},
-// 			password: {
-// 				required: "Please enter a valid password.",
-// 				strongPassword: "password must be with at least 6 character and at least one letter and one number."
-// 			},
-// 			fullName: {
-// 				required: "Please enter your full name.",
-// 				lettersonly: "full name must contain only letters."
-// 			},
-// 			email: {
-// 				required: "Please enter a valid email address.",
-// 				email: "email in not valid, please enter a valid email address."
-// 			},
-// 			birthDate: {
-// 				required: "Please enter your birth date."
-// 			}
-// 		},
-// 		submitHandler: function() {
-// 			//add user to users dict
-// 			let username = document.getElementById("username").value;
-// 			let password = document.getElementById("password").value;
-// 			usersDict[username] = password;
-// 			let form = $("#signupForm");
-// 			form[0].reset();
-// 			// form.submit();
-// 			toggleDiv('loginForm');
-// 		}
-// 	});
-	
-// });
+// function CheckForm()
+// {
+// if (document.settingsForm.upKeyInp.value == "")
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+// if (document.settingsForm.down_key.value == "")
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+// if (document.settingsForm.left_key.value == "")
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+// if (document.settingsForm.right_key.value == "")
+
+// {
+// alert ("Please fill in this field");
+// return false;
+// }
+
+//  }
 
 window.addEventListener("keydown", function(e) {
 	if(e.target.id === "upKeyInp"){
@@ -234,7 +201,6 @@ function saveSetting(){
 
 	time_left = time_left_;
 	ghosts_num = ghosts_num_;
-	live_left = 5;
  }
 
 
@@ -279,6 +245,11 @@ function generateRandom(min, max) {
     rand = rand + min;
     return rand;
 }
+//-------------------About------------------------------------------
+function about() {
+	var popup = document.getElementById("myPopup");
+	popup.classList.toggle("show");
+  }
 
 //--------------------jquery validation of Sign Up form--------------------- 
 $(document).ready(function() {
@@ -333,80 +304,7 @@ $(document).ready(function() {
 			let form = $("#signupForm");
 			form[0].reset();
 			// form.submit();
-			toggleDiv('loginForm');
-		}
-	});
-		// ---------------------------------settings form validation ------------------------------------------
-
-	$("#settingsForm").validate({
-		rules: {
-			ballsNum: {
-				required: true
-			},
-			ball_5_color: {
-				required: true
-			},
-			ball_15_color: {
-				required: true
-			},
-			ball_25_color: {
-				required: true
-			},
-			upKeyInp: {
-				required: true,
-				keyPressUnique: true
-			},
-			downKeyInp: {
-				required: true,
-				keyPressUnique: true
-			},
-			LeftKeyInp: {
-				required: true,
-				keyPressUnique: true
-			},
-			rightKeyInp: {
-				required: true,
-				keyPressUnique: true
-			}
-		},
-		messages: {
-			ballsNum: {
-				required: "Please enter number of balls."
-			},
-			ball_5_color: {
-				required: "Please enter balls color."
-			},
-			ball_15_color: {
-				required: "Please enter balls color."
-			},
-			ball_25_color: {
-				required: "Please enter balls color."
-			},
-			upKeyInp: {
-				required: "Please enter up Key press.",
-				keyPressUnique: "Please enter unique key press"
-				
-			},
-			downKeyInp: {
-				required: "Please enter down Key press.",
-				keyPressUnique: "Please enter unique key press"
-			},
-			LeftKeyInp: {
-				required: "Please enter left Key press.",
-				keyPressUnique: "Please enter unique key press"
-			},
-			rightKeyInp: {
-				required: "Please enter right Key press.",
-				keyPressUnique: "Please enter unique key press"
-			}
-			
-		},
-		submitHandler: function() {
-
-			updateSetting();
-			let form = $("#settingsForm");
-			form[0].reset();
-			
+			toggleDiv('welcomeDiv');
 		}
 	});
 });
@@ -430,20 +328,6 @@ $(function() {
 			return true;
 		}
 	});
-	$.validator.addMethod("keyPressUnique", function() {
-		let upKey = document.getElementById("upKeyInp").value;
-		let downKey = document.getElementById("downKeyInp").value;
-		let rightKey = document.getElementById("rightKeyInp").value;
-		let leftKey = document.getElementById("LeftKeyInp").value;
-
-		if(upKey == downKey || upKey == leftKey || upKey == rightKey ||downKey==leftKey|| downKey==rightKey || rightKey== leftKey){
-			return false;
-		}
-		else{
-			return true;
-		}
-
-	});
 });
 
 //////New game from the game page //////////////
@@ -453,16 +337,18 @@ function newGame(){
 	Start();
 
 }
-// ------------------------------Game Audio--------------------------------------------
-function playAudio() {
 
-	document.getElementById("myAudio").play();
-	document.getElementById("myAudio").volume = 0.2;
+
+function playAudio() {
+	$('img.playMusicClass').click(function () {
+		_sound.play();
+	});
 }
 
 function stopAudio() {
-
-	document.getElementById("myAudio").pause();
+	$('img.stopMusicClass').click(function () {
+		_sound.pause();
+	});
 }
 
 function Start() {
@@ -496,7 +382,7 @@ function Start() {
 	var cnt = 441;
 	balls_left = num_of_ball;
 	start_num_of_balls = num_of_ball;
-	playAudio() ;
+
 	// _sound.play();
 	// _sound.volume =0.2;
 	// objects clock and heart for the special functionality
@@ -875,7 +761,9 @@ function Draw() {
 					
 			}
 		
-			draw_ghost(context,30,30);
+			// draw_ghost(context,30,30);
+			draw_ghost();
+
 
 			
         // console.log("here")
@@ -901,25 +789,19 @@ window.addEventListener('keyup',
     },
 false);
 
+function draw_ghost() {
+	for (var k=0; k<ghost_pos_arr.length; k++) {
+		var center = new Object();
+		center.y = ghost_pos_arr[k].j * 2* 30 + 30;
+		center.x = ghost_pos_arr[k].i* 2 * 30 + 30;
 
+		context.beginPath();
+		var image = new Image();
+		image.src = ghost_pic[k];
+		context.drawImage(image,center.x-30, center.y -30, 2* 30 ,2* 30 )
+	}
 
-function draw_ghost(ctx,height,width){
-    for (var k=0; k<ghost_pos_arr.length; k++) {
-      x = ghost_pos_arr[k].i * 2* 30 + 30;
-      y = ghost_pos_arr[k].j* 2 * 30 + 30;
-      ctx.beginPath();
-      ctx.fillStyle = "blue" ;
-      ctx.arc(x , y, width, Math.PI, 2* Math.PI);
-      ctx.lineTo(x + width, y + height);
-      ctx.arc(x + width / 2, y + height, width * 0.5, 0, Math.PI);
-      ctx.arc(x + width / 2 - width , y + height, width * 0.5, 0, Math.PI);
-      ctx.closePath();
-      ctx.fill();
-      ctx.strokeStyle = "black";
-      ctx.stroke();
-    }
-  }
-
+}
   function closeAllInterval(){
 	window.clearInterval(ghost_interval);
 	window.clearInterval(interval);
@@ -969,7 +851,7 @@ function draw_ghost(ctx,height,width){
       balls_left--;
     }
 	else if(board[shape.i][shape.j] == 12){ //clock
-		time_left -= 10;
+		time_left += 10;
 		clock_game.exist = false;
 
 	}
@@ -991,8 +873,11 @@ function draw_ghost(ctx,height,width){
 				shape.j = emptyCell[1];
 			}
 			else{
+				// Swal.fire('Any fool can use a computer')
 				alert("Loser!");
-				newGame();
+				closeAllInterval();
+				restoreSetting();
+				Start();
 			// TODO: have to start a new game here!
 			}
 		}	
@@ -1002,7 +887,6 @@ function draw_ghost(ctx,height,width){
 		if(score < 100){
 			alert("You are better then " + score + " point!");
 			closeAllInterval();
-
 		}
 		else{
 			alert("Winner!")
@@ -1014,12 +898,9 @@ function draw_ghost(ctx,height,width){
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
 
-    if (live_left >=5 && score >= 40 && time_elapsed <= 100) {
-    	pac_color = "red";
-    }
-	else{
-		pac_color = "yellow";
-	}
+    // if (score >= 20 && time_elapsed <= 10) {
+    // 	pac_color = "green";
+    // }
     // if (score == 50) {
     // 	window.clearInterval(interval);
     // 	window.alert("Game completed");

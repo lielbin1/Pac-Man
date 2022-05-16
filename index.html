@@ -41,7 +41,7 @@
 		<a class="menuItem" href="#Welcome" onclick="toggleDiv('welcomeDiv')">Welcome</a>
 		<a class="menuItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
 		<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
-		<a class="menuItem"  href="#About" onclick="About()">About</a>
+		<a class="menuItem"  href="#About" onclick="toggleDiv('AboutForm')">About</a>
 	</div>
 </center>	
 	val
@@ -111,6 +111,7 @@
 	  <br/>
 	  <br/>
 </center>
+
 		 
 <!---------------------------------------------- Login Form --------------------------------------------------->
 	<center>
@@ -127,6 +128,29 @@
 				 <br/> 
 				  <button type="button" onclick="Login()">Login</button>
 				  <button type="button" class="cancelbtn" onclick="toggleDiv('welcomeDiv')">Cancel</button>
+				</div>
+			  </form>
+			  <br/>
+			  <br/>
+			  <br/>
+		</div>
+	</center>	
+
+	<!---------------------------------------------- About Form --------------------------------------------------->
+	<center>
+		<div>
+			<form id="AboutForm"  style="display:none;">
+				<div class="container">
+					<span class="popuptext" id="myPopup">
+						<u><b>Presenters names :</b> </u>
+						<p><b>Liel Binyamin , Keren Dian</b></p>
+						<br>
+						<p><u><b>jQury and Template uses :</b></u> 
+							We use Jquery 3.4.0 for the validation of fields, and for play and stop the music. </p>
+						<p><u><b>Difficulties :</b></u> 
+							We had a particularly hard time with the ghost algorithm,
+							and the transition between pages on the site.</p>
+					</span>
 				</div>
 			  </form>
 			  <br/>
@@ -174,8 +198,8 @@
 					  <br>
 					  <br>
 					  <p>
-						<!-- <button class="game_button_start" type="button" value="Start Game" id="setting_Game" onclick='updateSetting()'>Start Game</button> -->
-						<button class="game_button_start" type="submit" value="Start Game" id="setting_Game">Start Game</button>
+						<button class="game_button_start" type="button" value="Start Game" id="setting_Game" onclick='updateSetting()'>Start Game</button>
+						<!-- <button class="game_button_start" type="button" value="Start Game" id="setting_Game">Start Game</button> -->
 						<button class="game_button" type="button" value="Random" id="setting_Random" onclick='random_setting()'>Random</button>
 					  </p>
 					
@@ -272,14 +296,6 @@
 						</td>
 					  </tr>
 					   <tr>
-					  <td>
-						  <div for="lblGhosts">
-							  <label for="lblGhosts"><b>Ghosts amount:</b></label><br>	
-							  <input class="inputGame" id = "lblGhosts" type="text" value="">
-						  </div> 
-					  </td>
-					   </tr>
-					   <tr>
 					   <td>
 						  <div for="lbl5ballColor">
 							  <label for="lbl5ballColor"><b>Color of 5 points :</b></label>	
@@ -297,12 +313,28 @@
 					   </tr>
 					   <tr>
 					   <td>
-						   <div for="lbl25ballColor">
+						<div for="lbl25ballColor">
 						  <label for="lbl25ballColor"><b>Color of 25 points:</b></label>	
 						  <input class="inputGame" id = "lbl25ballColor" value="">
-						  </div>
+						</div>
 					   </td><br>
 					   </tr>
+					   <tr>
+						<td>
+						   <div for="lblGhosts">
+							   <label for="lblGhosts"><b>Ghost Num:</b></label>	
+							   <input class="inputGame" id = "lblGhosts" value="" style="color:white">
+						   </div>
+						</td>
+						</tr>
+						<!-- <tr>
+							<td>
+							   <div for="lblTime">
+								   <label for="lblTime"><b>Game time:</b></label>	
+								   <input class="inputGame" id = "lblTime" value="" style="color:white">
+							   </div>
+							</td>
+							</tr> -->
 					   
 				</table>
 		</td>
