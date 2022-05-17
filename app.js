@@ -40,7 +40,7 @@ var active_user;
 
 var clock_game; // object on board is 12
 var time_left = 60; 
-var live_left = 4; 
+var live_left = 5; 
 var heart_game;
 var bonus_game;
 
@@ -204,7 +204,7 @@ function saveSetting(){
 	choosen_color25 = choosen_color25_;
 
 	time_left = time_left_;
-	live_left = 4;
+	live_left = 5;
 	ghosts_num = ghosts_num_;
  }
 
