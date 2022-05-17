@@ -204,7 +204,7 @@ function saveSetting(){
 	choosen_color25 = choosen_color25_;
 
 	time_left = time_left_;
-	live_left = 4;
+	live_left = 5;
 	ghosts_num = ghosts_num_;
  }
 
