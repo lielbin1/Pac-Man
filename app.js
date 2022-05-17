@@ -75,6 +75,7 @@ function toggleDiv(ToDivId)
 {
 	if(visibleId == "game"){
 		closeAllInterval();
+		stopAudio();
 	}
 	document.getElementById(visibleId).style.display = 'none';
 	document.getElementById(ToDivId).style.display = 'block';
@@ -90,6 +91,8 @@ function Login()
 	if (usersDict[username] && usersDict[username] == password) {
 		// alert('Login successful');
 		active_user = username;
+		let form = $("#loginForm");
+		form[0].reset();
 		// need to open settign page ;
 		toggleDiv('gameSettingsSection')
 		return; 
@@ -307,7 +310,81 @@ $(document).ready(function() {
 			toggleDiv('welcomeDiv');
 		}
 	});
+	// ---------------------------------settings form validation ------------------------------------------
+
+	$("#settingsForm").validate({
+		rules: {
+			ballsNum: {
+				required: true
+			},
+			ball_5_color: {
+				required: true
+			},
+			ball_15_color: {
+				required: true
+			},
+			ball_25_color: {
+				required: true
+			},
+			upKeyInp: {
+				required: true,
+				keyPressUnique: true
+			},
+			downKeyInp: {
+				required: true,
+				keyPressUnique: true
+			},
+			LeftKeyInp: {
+				required: true,
+				keyPressUnique: true
+			},
+			rightKeyInp: {
+				required: true,
+				keyPressUnique: true
+			}
+		},
+		messages: {
+			ballsNum: {
+				required: "Please enter number of balls."
+			},
+			ball_5_color: {
+				required: "Please enter balls color."
+			},
+			ball_15_color: {
+				required: "Please enter balls color."
+			},
+			ball_25_color: {
+				required: "Please enter balls color."
+			},
+			upKeyInp: {
+				required: "Please enter up Key press.",
+				keyPressUnique: "Please enter unique key press"
+
+			},
+			downKeyInp: {
+				required: "Please enter down Key press.",
+				keyPressUnique: "Please enter unique key press"
+			},
+			LeftKeyInp: {
+				required: "Please enter left Key press.",
+				keyPressUnique: "Please enter unique key press"
+			},
+			rightKeyInp: {
+				required: "Please enter right Key press.",
+				keyPressUnique: "Please enter unique key press"
+			}
+
+		},
+		submitHandler: function() {
+
+			updateSetting();
+			let form = $("#settingsForm");
+			form[0].reset();
+
+		}
+	});
 });
+
 
 
 //-------------functions fo jquery validation of Sign Up form-----------------
@@ -328,6 +405,20 @@ $(function() {
 			return true;
 		}
 	});
+	$.validator.addMethod("keyPressUnique", function() {
+		let upKey = document.getElementById("upKeyInp").value;
+		let downKey = document.getElementById("downKeyInp").value;
+		let rightKey = document.getElementById("rightKeyInp").value;
+		let leftKey = document.getElementById("LeftKeyInp").value;
+
+		if(upKey == downKey || upKey == leftKey || upKey == rightKey ||downKey==leftKey|| downKey==rightKey || rightKey== leftKey){
+			return false;
+		}
+		else{
+			return true;
+		}
+
+	});
 });
 
 //////New game from the game page //////////////
@@ -340,15 +431,12 @@ function newGame(){
 
 
 function playAudio() {
-	$('img.playMusicClass').click(function () {
-		_sound.play();
-	});
+	document.getElementById("myAudio").play();
+	document.getElementById("myAudio").volume = 0.2;
 }
 
 function stopAudio() {
-	$('img.stopMusicClass').click(function () {
-		_sound.pause();
-	});
+	document.getElementById("myAudio").pause();
 }
 
 function Start() {
@@ -382,7 +470,7 @@ function Start() {
 	var cnt = 441;
 	balls_left = num_of_ball;
 	start_num_of_balls = num_of_ball;
-
+	playAudio() ;
 	// _sound.play();
 	// _sound.volume =0.2;
 	// objects clock and heart for the special functionality
@@ -875,9 +963,10 @@ function draw_ghost() {
 			else{
 				// Swal.fire('Any fool can use a computer')
 				alert("Loser!");
-				closeAllInterval();
-				restoreSetting();
-				Start();
+				newGame();
+				// closeAllInterval();
+				// restoreSetting();
+				// Start();
 			// TODO: have to start a new game here!
 			}
 		}	
@@ -898,9 +987,12 @@ function draw_ghost() {
     var currentTime = new Date();
     time_elapsed = (currentTime - start_time) / 1000;
 
-    // if (score >= 20 && time_elapsed <= 10) {
-    // 	pac_color = "green";
-    // }
+    if (live_left >=5 && score >= 40 && time_elapsed <= 100) {
+    	pac_color = "red";
+    }
+	else{
+		pac_color = "yellow";
+	}
     // if (score == 50) {
     // 	window.clearInterval(interval);
     // 	window.alert("Game completed");
