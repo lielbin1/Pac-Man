@@ -40,14 +40,14 @@ var active_user;
 
 var clock_game; // object on board is 12
 var time_left = 60; 
-var live_left = 5; 
+var live_left = 4; 
 var heart_game;
 var bonus_game;
 
 var _sound = document.getElementById("myAudio");
 
  
-
+var game_time;
 var ghost_interval;
 
 
@@ -168,6 +168,7 @@ function updateSetting(){
 	choosen_color25 = document.getElementById('ball_25_color').value;
 
 	time_left = document.getElementById('gameTime').value;
+	game_time = time_left;
 	ghosts_num = document.getElementById('ghostsNum').value;
 
 
@@ -188,7 +189,7 @@ function saveSetting(){
 	choosen_color15_ = choosen_color15;
 	choosen_color25_ = choosen_color25;
 
-	time_left_ = time_left;
+	time_left_ = game_time;
 	ghosts_num_ = ghosts_num;
 	
 }
@@ -203,6 +204,7 @@ function saveSetting(){
 	choosen_color25 = choosen_color25_;
 
 	time_left = time_left_;
+	live_left = 4;
 	ghosts_num = ghosts_num_;
  }
 
@@ -223,6 +225,7 @@ function random_setting(){
 	choosen_color25 = generateRandomColor()
 
 	time_left = generateRandom(60,90);
+	game_time = time_left;
 	ghosts_num = generateRandom(1,4);
 
 	toggleDiv('game')
@@ -465,11 +468,13 @@ function Start() {
 		[0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0],
 	];
 	// updateSetting();
+	restoreSetting()
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 441;
 	balls_left = num_of_ball;
 	start_num_of_balls = num_of_ball;
+	
 	playAudio() ;
 	// _sound.play();
 	// _sound.volume =0.2;
@@ -738,6 +743,8 @@ function GetKeyPressed() {
 function setlabel(){
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblGameTime.value = game_time;
+	lblNumOfBall.value = num_of_ball_;
 	lblLive.value = live_left;
 	lblUser.value = active_user;
 	lblUpKey.value = up_key;
@@ -954,7 +961,7 @@ function draw_ghost() {
 		if(shape.i == ghost_pos_arr[k].i && shape.j == ghost_pos_arr[k].j){
 			live_left--;
 			score -= 10;
-			if(live_left > 1){
+			if(live_left > 0){
 				putGhostOnCorners();
 				var emptyCell = findRandomEmptyCell(board);
 				shape.i = emptyCell[0];
@@ -962,7 +969,9 @@ function draw_ghost() {
 			}
 			else{
 				// Swal.fire('Any fool can use a computer')
+				stopAudio();
 				alert("Loser!");
+				
 				newGame();
 				// closeAllInterval();
 				// restoreSetting();
