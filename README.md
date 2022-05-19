@@ -1,3 +1,10 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7770212&assignment_repo_type=AssignmentRepo)
-# Assignment2
- 
+# Pac-Man
+
+Welcome to the game,
+To log in you need to register or log in with a username - K and a password - K.
+Then log in and select the game settings in advance.
+In the game, there are various functionalities such as a builder that gives you another 50 points, a snail that slows the pace of the ghosts, a heart that gives you life, and a clock that gives you another 10 seconds per game.
+
+
+## Game board
+ ![image](https://user-images.githubusercontent.com/80154838/169250006-8e3a8bc5-5b88-4927-8fdb-e4a381c76b1e.png)
