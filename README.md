@@ -7,9 +7,9 @@ In the game, there are various functionalities such as a builder that gives you 
 
 
 ## Students:
-* Liel Binyamin - 319081600,        
+* Liel Binyamin - 319081600        
   mail: lielbin@post.bgu.ac.il
-* Keren Dian - 312804446,        
+* Keren Dian - 312804446        
   mail: diank@post.bgu.ac.il
 
 ## Game board
