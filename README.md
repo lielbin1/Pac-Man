@@ -1,9 +1,9 @@
 # Pac-Man
 
 Welcome to the game,
-To log in you need to register or log in with a username - K and a password - K.
+To log in you need to register or log in with a username - k and a password - k.
 Then log in and select the game settings in advance.
-In the game, there are various functionalities such as a builder that gives you another 50 points, a snail that slows the pace of the ghosts, a heart that gives you life, and a clock that gives you another 10 seconds per game.
+In the game, there are various functionalities such as a dollar bag that gives you another 50 points, a snail that slows the pace of the ghosts, a heart that gives you one more life, and a clock that gives you another 10 seconds per clock.
 
 
 ## Students:
