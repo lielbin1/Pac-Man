@@ -599,7 +599,7 @@ function Start() {
 	interval = setInterval(UpdatePosition, 100);
 	clock_interval = setInterval(updateClock ,4000);
 	heart_interval = setInterval(updateHeart ,5000);
-	slow_motion_interval = setInterval(updateSlowMotion, 10000);
+	slow_motion_interval = setInterval(updateSlowMotion, 20000);
   	putGhostOnCorners();
 	ghost_interval = setInterval(UpdateGhosts, 250);
   	// timeGhostInterval(time_interval_ghost_slow_motion);
