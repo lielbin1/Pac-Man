@@ -11,6 +11,9 @@ In the game, there are various functionalities such as a builder that gives you 
   mail: lielbin@post.bgu.ac.il
 * Keren Dian - 312804446        
   mail: diank@post.bgu.ac.il
+  
+  
+Website address:
 
 ## Game board
  ![image](https://user-images.githubusercontent.com/80154838/169250006-8e3a8bc5-5b88-4927-8fdb-e4a381c76b1e.png)
