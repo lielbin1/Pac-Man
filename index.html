@@ -37,7 +37,9 @@
 		<a class="menuItem" href="#Welcome" onclick="toggleDiv('welcomeDiv')">Welcome</a>
 		<a class="menuItem" href="#Signup" onclick="toggleDiv('signupForm')">Signup</a>
 		<a class="menuItem" href="#Login" onclick="toggleDiv('loginForm')">Login</a>
-		<a class="menuItem"  href="#About" onclick="toggleDiv('AboutForm')">About</a>
+		<!-- <a class="menuItem"  href="#About" onclick="toggleDiv('AboutForm')">About</a> -->
+		<a class="menuItem"  id="aboutLink" href="#About" onclick="handleAbout()">About</a>
+
 	</div>
 </center>	
 	val
@@ -133,17 +135,17 @@
 	</center>	
 
 	<!---------------------------------------------- About Form --------------------------------------------------->
-	<center>
+	<!-- <center>
 		<div>
 			<form id="AboutForm"  style="display:none;">
 				<div class="container">
 					<span class="popuptext" id="myPopup">
-						<u><b>Presenters names :</b> </u>
-						<p><b>Liel Binyamin , Keren Dian</b></p>
+						<p><u>Presenters names : </u></p>
+						<p>Liel Binyamin , Keren Dian</p>
 						<br>
-						<p><u><b>jQury and Template uses :</b></u> 
-							We use Jquery 3.4.0 for the validation of fields, and for play and stop the music. </p>
-						<p><u><b>Difficulties :</b></u> 
+						<p><u>jQury and Template used :</u> 
+							We use Jquery 3.4.0 for the validation of fields in the sign in form and in settings form. </p>
+						<p><u>Difficulties :</u> 
 							We had a particularly hard time with the ghost algorithm,
 							and the transition between pages on the site.</p>
 					</span>
@@ -153,8 +155,27 @@
 			  <br/>
 			  <br/>
 		</div>
-	</center>	
+	</center>	 -->
+	<!-- The Modal -->
 	
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+		<span class="close">&times;</span>
+		<span class="popuptext" id="myPopup">
+			<p><u>Presenters names : </u></p>
+			<p>Liel Binyamin , Keren Dian</p>
+			<br>
+			<p><u>jQury and Template used :</u> 
+				We use Jquery 3.4.0 for the validation of fields in the sign in form and in settings form. </p>
+			<p><u>Difficulties :</u> 
+				We had a particularly hard time with the ghost algorithm,
+				and the transition between pages on the site.</p>
+		</span>
+		</div>
+	
+	</div>
 <!----------------------------------------------- settings section ------------------------------------------->
 		<center>
 			<section  id="gameSettingsSection" style="display:none;">

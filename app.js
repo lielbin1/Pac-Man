@@ -108,34 +108,43 @@ function Login()
 }
 
 
-//--------------------Setting form--------------------- 
+//--------------------handle About modal dialog--------------------- 
+function handleAbout(){
+// Get the modal
+var modal = document.getElementById("myModal");
 
-// function CheckForm()
-// {
-// if (document.settingsForm.upKeyInp.value == "")
-// {
-// alert ("Please fill in this field");
-// return false;
-// }
-// if (document.settingsForm.down_key.value == "")
-// {
-// alert ("Please fill in this field");
-// return false;
-// }
-// if (document.settingsForm.left_key.value == "")
-// {
-// alert ("Please fill in this field");
-// return false;
-// }
-// if (document.settingsForm.right_key.value == "")
+// Get the button that opens the modal
+var btn = document.getElementById("aboutLink");
 
-// {
-// alert ("Please fill in this field");
-// return false;
-// }
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 
-//  }
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
 
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+// close modal dialog on ESC key press
+document.addEventListener('keydown', (event) => {
+	if (event.key === 'Escape') {
+			modal.style.display = "none";
+	}
+  })
+}
+
+// ------------------------------------------------------------
 window.addEventListener("keydown", function(e) {
 	if(e.target.id === "upKeyInp"){
 	   up_key = e.code; 
@@ -312,7 +321,7 @@ $(document).ready(function() {
 			let form = $("#signupForm");
 			form[0].reset();
 			// form.submit();
-			toggleDiv('welcomeDiv');
+			toggleDiv('loginForm');
 		}
 	});
 	// ---------------------------------settings form validation ------------------------------------------
@@ -590,7 +599,7 @@ function Start() {
 	interval = setInterval(UpdatePosition, 100);
 	clock_interval = setInterval(updateClock ,4000);
 	heart_interval = setInterval(updateHeart ,5000);
-	slow_motion_interval = setInterval(updateSlowMotion, 1000);
+	slow_motion_interval = setInterval(updateSlowMotion, 10000);
   	putGhostOnCorners();
 	ghost_interval = setInterval(UpdateGhosts, 250);
   	// timeGhostInterval(time_interval_ghost_slow_motion);
@@ -643,7 +652,6 @@ function updateHeart(){
 //----------------------add bonus to the board------------------------
 
 function UpdateBonus(){ 
-	board[bonus_game.i][bonus_game.j] = 0;
 	// var emptyCell = findRandomEmptyCell(board);
 	// bonus_game.i = emptyCell[0];
 	// bonus_game.j = emptyCell[1];
@@ -652,25 +660,25 @@ function UpdateBonus(){
 	if(randomNum == 0){//right
 		if(bonus_game.i < cols - 1  && board[bonus_game.i+1][bonus_game.j] != 4 && noGhost(bonus_game.i+1,bonus_game.j)){
 			bonus_game.i++;
-			board[bonus_game.i][bonus_game.j] = 50;
+			
 		}
 	}
 	else if(randomNum == 1){//left
 		if(bonus_game.i > 0 && board[bonus_game.i-1][bonus_game.j] != 4 && noGhost(bonus_game.i-1,bonus_game.j)){
 			bonus_game.i--;
-			board[bonus_game.i][bonus_game.j] = 50;
+		
 		}
 	}
 	else if(randomNum == 2){//up
 		if(bonus_game.j < rows - 1  && board[bonus_game.i][bonus_game.j+1] != 4 && noGhost(bonus_game.i,bonus_game.j+1)){
 			bonus_game.j++;
-			board[bonus_game.i][bonus_game.j] = 50;
+		
 		}
 	}
 	else if(randomNum == 3){//down
 		if(bonus_game.j >0  && board[bonus_game.i][bonus_game.j-1] != 4 && noGhost(bonus_game.i,bonus_game.j-1)){
 			bonus_game.j--;
-			board[bonus_game.i][bonus_game.j] = 50;
+			
 		}
 	}
 }
@@ -872,25 +880,19 @@ function Draw() {
 				Heart_image.src = "heart.png";
 				context.drawImage(Heart_image,center.x-20 , center.y-20 , 50,50)		
 			}
-			else if(board[i][j] == 50){ //Bonus
-				context.beginPath();
-				var Bonus_image = new Image();
-				Bonus_image.src = "images/bonus1.png";
-				context.drawImage(Bonus_image,center.x-20 , center.y-20 , 50,50)	
-					
-			}
+		
 			else if(board[i][j] == 40){ //slow motion
 				context.beginPath();
-				var Bonus_image = new Image();
-				Bonus_image.src = "images/slow_motion.png";
-				context.drawImage(Bonus_image,center.x-20 , center.y-20 , 50,50)	
+				var slow_motion_image = new Image();
+				slow_motion_image.src = "images/slow_motion.png";
+				context.drawImage(slow_motion_image,center.x-20 , center.y-20 , 50,50)	
 					
 			}
 
 		
 			// draw_ghost(context,30,30);
 			draw_ghost();
-
+			draw_bonus();
 
 			
         // console.log("here")
@@ -915,6 +917,17 @@ window.addEventListener('keyup',
         keys[e.keyCode] = false;
     },
 false);
+
+function draw_bonus(){ 
+	var center = new Object();
+	center.y = bonus_game.j * 2* 30 + 30;
+	center.x = bonus_game.i* 2 * 30 + 30;
+
+	context.beginPath();
+	var Bonus_image = new Image();
+	Bonus_image.src = "images/bonus1.png";
+	context.drawImage(Bonus_image,center.x-20 , center.y-20 , 50,50)	
+}
 
 function draw_ghost() {
 	for (var k=0; k<ghost_pos_arr.length; k++) {
@@ -989,8 +1002,11 @@ function draw_ghost() {
 		live_left += 1;
 		heart_game.exist = false;
 	}
-	else if(board[shape.i][shape.j] == 50){ //bonus
+	else if(shape.i== bonus_game.i && shape.j == bonus_game.j){ //bonus
 		score += 50;
+		var emptyCell = findRandomEmptyCell(board);
+		bonus_game.j = emptyCell[1];
+		bonus_game.i = emptyCell[0];
 	}
 
 	else if(board[shape.i][shape.j] == 40){ //slow motion
