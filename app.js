@@ -43,6 +43,8 @@ var time_left = 60;
 var live_left = 5; 
 var heart_game;
 var bonus_game;
+var slow_motion;
+var time_interval_ghost_slow_motion = 250; //When Pacman eats the snail the speed of the monsters decreases by 10
 
 var _sound = document.getElementById("myAudio");
 
@@ -480,6 +482,7 @@ function Start() {
 	// _sound.volume =0.2;
 	// objects clock and heart for the special functionality
 	heart_game = new Object();
+	slow_motion = new Object();
 	clock_game = new Object();
 	bonus_game = new Object();
 	var emptyCell = findRandomEmptyCell(board);
@@ -491,6 +494,8 @@ function Start() {
 
 	heart_game.exist = false;
 	heart_game.eaten = false;
+
+	slow_motion.exist = false;
 
 	clock_game.exist = false;
 	clock_game.eaten = false;
@@ -585,9 +590,18 @@ function Start() {
 	interval = setInterval(UpdatePosition, 100);
 	clock_interval = setInterval(updateClock ,4000);
 	heart_interval = setInterval(updateHeart ,5000);
+	slow_motion_interval = setInterval(updateSlowMotion, 1000);
   	putGhostOnCorners();
-  	ghost_interval = setInterval(UpdateGhosts, 250);
+	ghost_interval = setInterval(UpdateGhosts, 250);
+  	// timeGhostInterval(time_interval_ghost_slow_motion);
 	bonus_interval = setInterval(UpdateBonus, 500);
+}
+
+
+
+function timeGhostInterval(time){
+	window.clearInterval(ghost_interval);
+	ghost_interval = setInterval(UpdateGhosts, time);
 }
 
 
@@ -603,7 +617,17 @@ function updateClock(){
 		clock_game.exist = true;
 	}
 }
+//----------------------add slow motion to the board------------------------
 
+function updateSlowMotion(){ 
+	if(slow_motion.exist == false){
+		var emptyCell = findRandomEmptyCell(board);
+		slow_motion.i = emptyCell[0];
+		slow_motion.j = emptyCell[1];
+		board[emptyCell[0]][emptyCell[1]] = 40; 
+		slow_motion.exist = true;
+	}
+}
 //----------------------add heart to the board------------------------
 
 function updateHeart(){ 
@@ -855,6 +879,14 @@ function Draw() {
 				context.drawImage(Bonus_image,center.x-20 , center.y-20 , 50,50)	
 					
 			}
+			else if(board[i][j] == 40){ //slow motion
+				context.beginPath();
+				var Bonus_image = new Image();
+				Bonus_image.src = "images/slow_motion.png";
+				context.drawImage(Bonus_image,center.x-20 , center.y-20 , 50,50)	
+					
+			}
+
 		
 			// draw_ghost(context,30,30);
 			draw_ghost();
@@ -903,6 +935,9 @@ function draw_ghost() {
 	window.clearInterval(clock_interval);
 	window.clearInterval(bonus_interval);
 	window.clearInterval(heart_interval);
+  }
+  function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   function UpdatePosition() {
@@ -957,6 +992,13 @@ function draw_ghost() {
 	else if(board[shape.i][shape.j] == 50){ //bonus
 		score += 50;
 	}
+
+	else if(board[shape.i][shape.j] == 40){ //slow motion
+		time_interval_ghost_slow_motion+=50;
+		timeGhostInterval(time_interval_ghost_slow_motion);
+		slow_motion.exist = false;
+	}
+
 	for (var k=0; k<ghosts_num; k++) {
 		if(shape.i == ghost_pos_arr[k].i && shape.j == ghost_pos_arr[k].j){
 			live_left--;
@@ -981,7 +1023,7 @@ function draw_ghost() {
 		}	
 	}
 	// time_elapsed = time_left;
-	if(parseInt(time_elapsed) == time_left){
+	if(parseInt(time_elapsed) == time_left  ){
 		if(score < 100){
 			alert("You are better then " + score + " point!");
 			closeAllInterval();
@@ -989,7 +1031,13 @@ function draw_ghost() {
 		else{
 			alert("Winner!")
 			closeAllInterval();
+			Start();
 		}
+	}
+	if(balls_left == 0){
+		alert("Winner!")
+		closeAllInterval();
+		Start();
 	}
     
 	board[shape.i][shape.j] = 2;
