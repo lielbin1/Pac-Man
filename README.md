@@ -13,10 +13,11 @@ In the game, there are various functionalities such as a builder that gives you 
   mail: diank@post.bgu.ac.il
   
   
-Website address:
+## Website address: 
+https://web-development-environments-2022.github.io/assignment2-319081600_312804446/
 
 ## Game board
- ![image](https://user-images.githubusercontent.com/80154838/169250006-8e3a8bc5-5b88-4927-8fdb-e4a381c76b1e.png)
+ ![image](https://user-images.githubusercontent.com/80154838/169250006-8e3a8bc5-5b88-4927-8fdb-e4a381c76b1e.png) 
  
  
  
