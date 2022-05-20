@@ -440,9 +440,12 @@ function newGame(){
 	closeAllInterval();
 	restoreSetting();
 	Start();
-
 }
 
+function newGameBtn(){
+	closeAllInterval();
+	toggleDiv("gameSettingsSection");
+}
 
 function playAudio() {
 	document.getElementById("myAudio").play();
@@ -1031,10 +1034,7 @@ function draw_ghost() {
 				alert("Loser!");
 				
 				newGame();
-				// closeAllInterval();
-				// restoreSetting();
-				// Start();
-			// TODO: have to start a new game here!
+			
 			}
 		}	
 	}
@@ -1047,13 +1047,11 @@ function draw_ghost() {
 		else{
 			alert("Winner!")
 			closeAllInterval();
-			Start();
 		}
 	}
 	if(balls_left == 0){
 		alert("Winner!")
 		closeAllInterval();
-		Start();
 	}
     
 	board[shape.i][shape.j] = 2;
