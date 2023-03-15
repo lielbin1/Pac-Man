@@ -7,9 +7,9 @@ In the game, there are various functionalities such as a dollar bag that gives y
 
 
 ## Students:
-* Liel Binyamin - 319081600        
+* Liel Binyamin         
   mail: lielbin@post.bgu.ac.il
-* Keren Dian - 312804446        
+* Keren Dian        
   mail: diank@post.bgu.ac.il
   
   
